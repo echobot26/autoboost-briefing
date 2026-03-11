@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>AutoBoost — DMS Anbieter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #f8f8fb; color: #1a1a2e; font-size: 11px; line-height: 1.6; }
+  .page { width: 210mm; min-height: 297mm; padding: 14mm 16mm 12mm 16mm; margin: 0 auto 8mm; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 10px; border-bottom: 2.5px solid #065f46; margin-bottom: 14px; }
+  .brand-name { font-size: 22px; font-weight: 700; color: #7C3AED; letter-spacing: -0.5px; }
+  .brand-sub { font-size: 8.5px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+  .header-tag { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; border-radius: 4px; padding: 3px 9px; font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .hero { margin-bottom: 14px; }
+  .hero h1 { font-size: 15.5px; font-weight: 700; color: #0f0f1a; line-height: 1.3; margin-bottom: 6px; }
+  .hero p { font-size: 10.5px; color: #374151; line-height: 1.7; }
+  .section { margin-bottom: 13px; }
+  .section-title { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.9px; color: #065f46; margin-bottom: 7px; padding-bottom: 3px; border-bottom: 1px solid #d1fae5; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .card { background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 5px; padding: 9px 11px; }
+  .card h3 { font-size: 10px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .card p { font-size: 9.5px; color: #4b5563; line-height: 1.6; }
+  ul.clean { list-style: none; padding: 0; }
+  ul.clean li { font-size: 10px; color: #374151; padding: 3.5px 0 3.5px 15px; position: relative; border-bottom: 1px solid #f3f4f6; }
+  ul.clean li:last-child { border-bottom: none; }
+  ul.clean li::before { content: '→'; position: absolute; left: 0; color: #065f46; font-weight: 700; }
+  .highlight { background: linear-gradient(135deg, #f0fdf4, #faf9ff); border: 1px solid #a7f3d0; border-left: 3px solid #065f46; border-radius: 4px; padding: 9px 13px; margin-bottom: 13px; }
+  .highlight p { font-size: 10px; color: #374151; line-height: 1.7; font-style: italic; }
+  .outlook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .outlook-item { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 4px; padding: 7px 10px; display: flex; gap: 8px; align-items: flex-start; }
+  .outlook-icon { font-size: 15px; flex-shrink: 0; }
+  .outlook-item h4 { font-size: 9.5px; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .outlook-item p { font-size: 9px; color: #6b7280; line-height: 1.5; }
+  .footer { margin-top: auto; padding-top: 10px; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: flex-end; }
+  .footer-contact { font-size: 9px; color: #6b7280; line-height: 1.7; }
+  .footer-contact strong { color: #1a1a2e; }
+  .footer-cta { background: #065f46; color: white; border-radius: 4px; padding: 6px 14px; font-size: 9px; font-weight: 600; }
+  hr { border: none; border-top: 1px solid #f3f4f6; margin: 11px 0; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="brand-name">AutoBoost</div>
+      <div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div>
+    </div>
+    <div class="header-tag">Für DMS-Anbieter</div>
+  </div>
+
+  <div class="hero">
+    <h1>Von der Fahrzeugdaten-Verwaltung<br>zur messbaren Werbeleistung.</h1>
+    <p>DMS-Systeme halten die operativen Fahrzeugdaten eines Autohauses — Bestand, Preise, Verfügbarkeit. AutoBoost schließt die Lücke zur digitalen Werbung: Wir nutzen diese Daten, um Google Ads Kampagnen automatisch aktuell zu halten und Händlern echte Abverkaufswirkung zu ermöglichen. Das schafft Mehrwert für Ihre Kunden — und Potenzial für eine gemeinsame Positionierung.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Die Schnittstelle — wo DMS und Google Ads zusammenkommen</div>
+    <div class="two-col">
+      <div class="card">
+        <h3>Fahrzeugdaten als Kampagnengrundlage</h3>
+        <p>Bestandsdaten aus dem DMS werden als strukturierter Feed an Google Merchant Center übertragen — Grundlage für Vehicle Listing Ads mit tagesaktuellen Preisen und Bildern.</p>
+      </div>
+      <div class="card">
+        <h3>Automatische Feed-Synchronisation</h3>
+        <p>Änderungen im Bestand (Verkauf, Neuzugang, Preisanpassung) spiegeln sich automatisch in den Anzeigen wider — kein manueller Abgleich nötig.</p>
+      </div>
+      <div class="card">
+        <h3>Kampagnen-Struktur auf Basis von DMS-Daten</h3>
+        <p>Marken, Modelle, Standorte und Segmente aus dem DMS bilden die Basis für eine präzise Kampagnenarchitektur — ohne redundante Datenpflege.</p>
+      </div>
+      <div class="card">
+        <h3>Conversion-Daten zurück ins DMS</h3>
+        <p>Lead- und Kontaktdaten aus Google Ads können an DMS-Systeme zurückgespielt werden — für vollständige Vertriebstransparenz und CRM-Integration.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Was Ihr Kunde gewinnt — und warum das Ihnen nützt</div>
+    <ul class="clean">
+      <li>Händler erhalten automatisch aktuelle Werbung auf Basis ihrer DMS-Daten — ohne zusätzliche manuelle Pflege</li>
+      <li>Sinkende Abhängigkeit von Portalen: Händler bauen eigene digitale Sichtbarkeit auf Google auf</li>
+      <li>Messbare Ergebnisse: Leads, Klicks und Kosten sind direkt dem Fahrzeugbestand zuordenbar</li>
+      <li>Ihr DMS gewinnt an strategischem Wert — die Daten arbeiten über die eigene Plattform hinaus</li>
+      <li>Gemeinsame Kundenbindung: Händler haben weniger Grund, DMS zu wechseln, wenn der Werbeerfolg daran hängt</li>
+    </ul>
+  </div>
+
+  <div class="highlight">
+    <p>„Fahrzeugdaten sind das Herzstück jedes Autohauses. Wir sorgen dafür, dass diese Daten nicht nur intern genutzt werden, sondern direkt und automatisiert in Google-Werbung münden — in Echtzeit und ohne Bruch."</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-contact">
+      <strong>AutoBoost · by Echomotion GmbH</strong><br>
+      moritz@echomotion.de · echomotion.ai
+    </div>
+    <div class="footer-cta">Seite 1 / 2</div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="brand-name">AutoBoost</div>
+      <div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div>
+    </div>
+    <div class="header-tag">Für DMS-Anbieter</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Unser technischer Leistungsumfang</div>
+    <ul class="clean">
+      <li>Google Vehicle Listing Ads: Fahrzeugbestand-Feed an Google Merchant Center — automatisiert, tagesaktuell, mit Bild, Preis, Verfügbarkeit</li>
+      <li>Feed-Management: Validierung, Fehlerbehandlung, Formatierung gemäß Google-Anforderungen für NW und GW</li>
+      <li>Google Search Kampagnen: Strukturiert nach Marke, Modell und Standort auf Basis von DMS-Kategorisierung</li>
+      <li>Performance Max: Kampagnen-Signale basierend auf Bestands- und Conversion-Daten</li>
+      <li>Conversion Tracking: Rückmeldung von Lead-Qualität und Abschlüssen aus dem DMS</li>
+      <li>API-Kompatibilität: Abstimmung auf gängige DMS-Datenformate (CSV, XML, JSON) und Exportschnittstellen</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <div class="section-title">Ausblick — Weitere Kanäle &amp; Erweiterungen</div>
+    <p style="font-size:10px; color:#4b5563; margin-bottom:9px;">Kanäle und Services, die wir auf Wunsch in eine DMS-Integration einbinden:</p>
+    <div class="outlook-grid">
+      <div class="outlook-item">
+        <div class="outlook-icon">📱</div>
+        <div>
+          <h4>Meta Ads (Facebook &amp; Instagram)</h4>
+          <p>Fahrzeug-Katalog-Ads auf Meta-Basis aus denselben DMS-Daten — Retargeting auf Bestandsebene möglich.</p>
+        </div>
+      </div>
+      <div class="outlook-item">
+        <div class="outlook-icon">💼</div>
+        <div>
+          <h4>LinkedIn Ads</h4>
+          <p>B2B-Targeting für Gewerbevermarktung — ergänzt das DMS-Datenbild um den Flotten- und Gewerbesegment-Kanal.</p>
+        </div>
+      </div>
+      <div class="outlook-item">
+        <div class="outlook-icon">🗂</div>
+        <div>
+          <h4>Erweitertes Feed-Management</h4>
+          <p>Zentrale Feed-Distribution an Google, Meta, AutoScout, mobile.de und weitere Plattformen aus einer Datenquelle heraus.</p>
+        </div>
+      </div>
+      <div class="outlook-item">
+        <div class="outlook-icon">📍</div>
+        <div>
+          <h4>Google Business Profile</h4>
+          <p>Verwaltung und Pflege aller Händlerstandorte — integrierbar in DMS-Stammdaten für konsistente Standortinfos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Partnerschaftsmodell — wie wir zusammenarbeiten können</div>
+    <ul class="clean">
+      <li>Technische Integration: Entwicklung einer direkten Schnittstelle zwischen DMS-Export und unserem Feed-Management</li>
+      <li>White-Label-Option: AutoBoost-Services unter Ihrem Markendach für Ihre Kundenbasis</li>
+      <li>Gemeinsames Go-to-Market: AutoBoost als empfohlener Ads-Partner für Ihre Händlerkunden</li>
+      <li>Pilotprojekt mit ausgewählten Händlern: Proof of Concept mit messbaren Ergebnissen als Basis für Rollout</li>
+      <li>Revshare oder Referral-Modell: flexible Kooperationsstruktur je nach strategischem Fit</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <div class="footer-contact">
+      <strong>Moritz Weinert · AutoBoost by Echomotion</strong><br>
+      moritz@echomotion.de · echomotion.ai<br>
+      Partnergespräch: briefing.autoboost.de
+    </div>
+    <div class="footer-cta">Partnerschaft besprechen</div>
+  </div>
+</div>
+
+</body>
+</html>
