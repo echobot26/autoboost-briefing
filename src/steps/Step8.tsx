@@ -10,12 +10,6 @@ interface Props {
 }
 
 export const Step8: React.FC<Props> = ({ data, onChange, onSubmit, submitting }) => {
-  const hasMercedes = data.marken.some(m =>
-    m.toLowerCase().includes('mercedes') || m.toLowerCase() === 'mb'
-  );
-  const hasPrivatkunden = data.segmente.includes('b2c');
-  const showMBWarning = hasMercedes && hasPrivatkunden;
-
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Timing & Besonderheiten</h2>
@@ -93,16 +87,6 @@ export const Step8: React.FC<Props> = ({ data, onChange, onSubmit, submitting })
             className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary resize-none"
           />
         </div>
-
-        {/* MB Warning */}
-        {showMBWarning && (
-          <div className="p-4 bg-yellow-900/30 border border-yellow-500/50 rounded-xl">
-            <p className="text-yellow-400 font-medium">⚠️ Hinweis: Mercedes-Benz Neuwagen</p>
-            <p className="text-yellow-300/80 text-sm mt-1">
-              Freie Mercedes-Benz Händler dürfen keine Google Ads für MB-Neuwagen (PKW) schalten. Bitte klären Sie Ihren Händlerstatus, bevor wir Kampagnen für MB-Neuwagen aufsetzen.
-            </p>
-          </div>
-        )}
 
         {/* Anmerkungen */}
         <div>
