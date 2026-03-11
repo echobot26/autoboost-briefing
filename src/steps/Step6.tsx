@@ -14,6 +14,7 @@ export const Step6: React.FC<Props> = ({ data, onChange }) => {
   const baseAmount = brands * locations * 15;
   const minRec = Math.max(30, Math.round(baseAmount * 0.7));
   const maxRec = Math.max(30, Math.round(baseAmount * 1.3));
+  const midRec = Math.max(30, Math.round(baseAmount));
 
   const hasRecommendation = brands > 0 && locations > 0;
 
@@ -59,7 +60,7 @@ export const Step6: React.FC<Props> = ({ data, onChange }) => {
             type="number"
             value={data.tagesbudget}
             onChange={e => onChange({ tagesbudget: e.target.value })}
-            placeholder={hasRecommendation ? String(minRec) : "50"}
+            placeholder={hasRecommendation ? String(midRec) : "50"}
             min="1"
             className="w-full bg-gray-800 border border-gray-600 rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
           />
