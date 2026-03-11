@@ -8,10 +8,10 @@ interface Props {
 }
 
 const KPIS = [
-  { id: 'ctr', label: 'Klickrate (CTR)' },
+  { id: 'roas', label: 'Conv. Wert pro Kosten (ROAS)' },
   { id: 'cpl', label: 'Kosten pro Lead (CPL)' },
-  { id: 'cvr', label: 'Conversion Rate' },
-  { id: 'impressions', label: 'Impressions / Sichtbarkeit' },
+  { id: 'clicks', label: 'Klicks / Engagements' },
+  { id: 'impressions', label: 'Impressionen' },
 ];
 
 export const Step5: React.FC<Props> = ({ data, onChange }) => {
