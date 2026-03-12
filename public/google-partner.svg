@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 87" width="160" height="87">
+  <!-- Background -->
+  <rect width="160" height="87" rx="6" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- Google G logo -->
+  <g transform="translate(18, 16)">
+    <path d="M14 7.2C14 6.67 13.95 6.16 13.86 5.67H7.14V8.58H10.96C10.79 9.49 10.27 10.26 9.48 10.78V12.65H11.84C13.22 11.38 14 9.46 14 7.2Z" fill="#4285F4"/>
+    <path d="M7.14 14.46C9.03 14.46 10.62 13.84 11.84 12.65L9.48 10.78C8.86 11.19 8.07 11.44 7.14 11.44C5.32 11.44 3.77 10.16 3.22 8.46H0.79V10.39C1.99 12.77 4.39 14.46 7.14 14.46Z" fill="#34A853"/>
+    <path d="M3.22 8.46C3.08 8.05 3 7.61 3 7.14C3 6.67 3.08 6.23 3.22 5.82V3.89H0.79C0.29 4.88 0 5.98 0 7.14C0 8.3 0.29 9.4 0.79 10.39L3.22 8.46Z" fill="#FBBC05"/>
+    <path d="M7.14 2.84C8.16 2.84 9.07 3.19 9.79 3.88L11.89 1.78C10.62 0.59 8.93 -0.14 7.14 0C4.39 0 1.99 1.67 0.79 4.05L3.22 5.98C3.77 4.28 5.32 2.84 7.14 2.84Z" fill="#EA4335"/>
+  </g>
+
+  <!-- "Google" text -->
+  <text x="42" y="27" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#1a1a1a" letter-spacing="0.3">Google</text>
+
+  <!-- Divider line -->
+  <line x1="16" y1="38" x2="144" y2="38" stroke="#e5e7eb" stroke-width="0.8"/>
+
+  <!-- "Partner" text -->
+  <text x="80" y="56" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#1a1a1a" text-anchor="middle" letter-spacing="1.5">PARTNER</text>
+
+  <!-- Stars decoration -->
+  <g fill="#FBBC05" transform="translate(42, 62)">
+    <polygon points="5,0 6.2,3.6 10,3.6 7,5.8 8.1,9.4 5,7.2 1.9,9.4 3,5.8 0,3.6 3.8,3.6" transform="scale(0.7)"/>
+    <polygon points="5,0 6.2,3.6 10,3.6 7,5.8 8.1,9.4 5,7.2 1.9,9.4 3,5.8 0,3.6 3.8,3.6" transform="translate(14,0) scale(0.7)"/>
+    <polygon points="5,0 6.2,3.6 10,3.6 7,5.8 8.1,9.4 5,7.2 1.9,9.4 3,5.8 0,3.6 3.8,3.6" transform="translate(28,0) scale(0.7)"/>
+    <polygon points="5,0 6.2,3.6 10,3.6 7,5.8 8.1,9.4 5,7.2 1.9,9.4 3,5.8 0,3.6 3.8,3.6" transform="translate(42,0) scale(0.7)"/>
+    <polygon points="5,0 6.2,3.6 10,3.6 7,5.8 8.1,9.4 5,7.2 1.9,9.4 3,5.8 0,3.6 3.8,3.6" transform="translate(56,0) scale(0.7)"/>
+  </g>
+</svg>
