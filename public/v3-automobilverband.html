@@ -2,54 +2,56 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>AutoBoost — Stärken Sie Ihr Händlernetz</title>
+<title>Autoboost — Stärken Sie Ihr Händlernetz</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--primary:#1d4ed8;--primary-light:#eff6ff;--primary-mid:#bfdbfe;--accent:#7C3AED;--text:#1a1a2e;--sub:#4b5563;--muted:#9ca3af;--border:#e5e7eb}
+  :root{--primary:#7C3AED;--primary-light:#ede9fe;--primary-mid:#ddd6fe;--accent:#06B6D4;--text:#1a1a2e;--sub:#4b5563;--muted:#9ca3af;--border:#e5e7eb}
   body{font-family:'Inter',sans-serif;background:#f0f0f5;color:var(--text);font-size:11.5px;line-height:1.7}
   a{color:var(--primary);text-decoration:none}
   a:hover{text-decoration:underline}
-  .page{width:210mm;min-height:297mm;padding:15mm 17mm 13mm;margin:0 auto 10mm;background:#fff;box-shadow:0 2px 24px rgba(0,0,0,.09);display:flex;flex-direction:column}
+  .page{width:210mm;min-height:297mm;padding:15mm 17mm 13mm;margin:0 auto 10mm;background:#fff;box-shadow:0 2px 24px rgba(0,0,0,.09);display:flex;flex-direction:column;gap:0}
   .header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:11px;border-bottom:2.5px solid var(--primary);margin-bottom:16px}
-  .brand-name{font-size:22px;font-weight:700;color:#7C3AED;letter-spacing:-.5px}
+  .brand-name{font-size:22px;font-weight:700;color:var(--primary);letter-spacing:-.5px}
   .brand-sub{font-size:8.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
-  .header-tag{background:var(--primary-light);color:var(--primary);border:1px solid var(--primary-mid);border-radius:5px;padding:4px 12px;font-size:8.5px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
-  .hero{margin-bottom:16px}
+  .header-tag{background:var(--primary-light);color:var(--primary);border:1px solid var(--primary-mid);border-radius:5px;padding:4px 12px;font-size:8.5px;font-weight:700;letter-spacing:.3px;white-space:nowrap;align-self:flex-start}
+  .hero{margin-bottom:12px}
   .hero h1{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px}
   .hero p{font-size:11px;color:var(--sub);line-height:1.75}
-  .section{margin-bottom:16px}
-  .section-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid var(--primary-light)}
+  .section{margin-bottom:12px}
+  .section-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-top:10px;margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid var(--primary-light)}
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .card{background:var(--primary-light);border:1px solid var(--primary-mid);border-radius:6px;padding:10px 12px}
+  .card{background:#faf9ff;border:1px solid var(--primary-light);border-radius:6px;padding:10px 12px}
   .card h3{font-size:10px;font-weight:600;color:var(--text);margin-bottom:4px}
   .card p{font-size:10px;color:var(--sub);line-height:1.65}
-  .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-  .ri{background:var(--primary-light);border:1px solid var(--primary-mid);border-radius:6px;padding:8px 10px;display:flex;align-items:flex-start;gap:9px}
+  .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+  .ri{background:#faf9ff;border:1px solid var(--primary-light);border-radius:6px;padding:8px 10px;display:flex;align-items:flex-start;gap:9px}
   .ri-dot{width:7px;height:7px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:4px}
   .ri-text{font-size:10px;color:var(--sub);line-height:1.55}
-  .trust-block{background:#f8faff;border:1.5px solid var(--primary-mid);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:16px}
-  .trust-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--primary);border-right:1px solid var(--primary-mid);padding-right:16px;white-space:nowrap;line-height:1.5}
-  .trust-label span{display:block;color:var(--muted);font-weight:400;font-size:8px;margin-top:1px}
-  .trust-stats{display:flex;flex:1}
+  .trust-block{background:#faf9ff;border:1.5px solid var(--primary-mid);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:16px}
+  .trust-label{border-right:1px solid var(--primary-mid);padding-right:16px;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .trust-label img{height:26px;object-fit:contain;display:block}
+  .trust-label span{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:400}
+  .trust-stats{display:flex;flex:1;gap:0}
   .ts{flex:1;text-align:center;padding:0 12px;border-right:1px solid var(--primary-mid)}
   .ts:last-child{border-right:none}
   .ts-num{font-size:20px;font-weight:700;color:var(--primary);line-height:1;display:block}
   .ts-label{font-size:8.5px;color:var(--sub);margin-top:2px;display:block}
   .sl-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .sl-item{display:flex;align-items:center;gap:9px;background:var(--primary-light);border:1px solid var(--primary-mid);border-radius:5px;padding:6px 10px}
+  .sl-item{display:flex;align-items:center;gap:9px;background:#faf9ff;border:1px solid var(--primary-light);border-radius:5px;padding:6px 10px}
   .sl-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);flex-shrink:0}
   .sl-text{font-size:10px;color:var(--text);font-weight:500;line-height:1.3}
-  .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .oi{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:8px 11px;display:flex;gap:9px;align-items:flex-start}
-  .oi-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px}
-  .oi h4{font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px}
-  .oi p{font-size:9.5px;color:var(--sub);line-height:1.55}
+  .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .oi{background:#faf9ff;border:1px solid var(--primary-mid);border-radius:7px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start}
+  .oi-icon{width:30px;height:30px;border-radius:6px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .oi-icon svg{width:16px;height:16px}
+  .oi-body h4{font-size:9.5px;font-weight:700;color:var(--primary);margin-bottom:2px}
+  .oi-body p{font-size:8px;color:var(--sub);line-height:1.5}
   .timeline{list-style:none;padding:0}
   .tl-item{display:flex;gap:12px;padding-bottom:10px}
   .tl-item:last-child{padding-bottom:0}
   .tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:30px}
-  .tl-dot{width:28px;height:28px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:700;flex-shrink:0;border:2px solid var(--primary-light)}
+  .tl-dot{width:28px;height:28px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:700;flex-shrink:0;border:2px solid var(--primary-light)}
   .tl-line{flex:1;width:2px;background:linear-gradient(to bottom,var(--primary-mid),#e0e7ff);min-height:8px}
   .tl-item:last-child .tl-line{display:none}
   .tl-content{padding-top:4px;flex:1}
@@ -58,7 +60,18 @@
   .tl-tag.green{background:#dcfce7;color:#15803d}
   .tl-content p{font-size:10px;color:var(--sub);line-height:1.6}
   hr{border:none;border-top:1px solid var(--border);margin:13px 0}
-  .footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end}
+  .claim-inline{border-left:3px solid var(--primary);padding:5px 0 5px 10px;margin-bottom:9px}
+  .claim-inline strong{font-size:12px;font-weight:800;color:var(--primary);line-height:1.3}
+  .claim-inline sup{font-size:7.5px;font-weight:400;color:var(--sub)}
+  .page-footnote{font-size:7.5px;color:var(--muted);margin-top:6px;padding-top:5px;border-top:1px solid var(--border)}
+  .stat-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--primary-light);border:1px solid var(--primary-mid);border-radius:7px;overflow:hidden;margin-bottom:16px}
+  .stat-item{padding:9px 12px;text-align:center;border-right:1px solid var(--primary-mid);position:relative}
+  .stat-item:last-child{border-right:none}
+  .stat-num{font-size:22px;font-weight:800;color:var(--primary);line-height:1;display:block;letter-spacing:-.5px}
+  .stat-label{font-size:8.5px;color:var(--sub);margin-top:3px;display:block;line-height:1.4}
+  .stat-source{font-size:6.5px;color:var(--primary);margin-top:2px;display:block;text-transform:uppercase;letter-spacing:.3px;text-decoration:underline;text-decoration-color:var(--primary-mid)}
+  .google-partner-badge{height:87px;width:auto;display:block;align-self:center}
+  .footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
   .footer-contact{font-size:9px;color:var(--muted);line-height:1.8}
   .footer-contact strong{color:var(--text)}
   .footer-cta{background:var(--primary);color:white;border-radius:5px;padding:6px 15px;font-size:9px;font-weight:600}
@@ -69,14 +82,32 @@
 <!-- PAGE 1 -->
 <div class="page">
   <div class="header">
-    <div><div class="brand-name">AutoBoost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
-    <div class="header-tag">Stärken Sie Ihr Händlernetz</div>
+    <div><div class="brand-name">Autoboost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
+    <div class="header-tag">Automobilverbände &amp; Netzwerke</div>
   </div>
 
   <div class="hero">
     <h1>Digitale Werbefähigkeit für den<br>stationären Automobilhandel stärken.</h1>
-    <p>Der Wettbewerb zwischen stationären Händlern und digitalen Portalen verschiebt sich zunehmend auf Google. AutoBoost ist ein spezialisierter Service, der Händler befähigt, ihre eigene digitale Sichtbarkeit aufzubauen — unabhängig von Plattformvermittlern.</p>
+    <p>Der Wettbewerb zwischen stationären Händlern und digitalen Portalen verschiebt sich zunehmend auf Google. Autoboost ist ein spezialisierter Service, der Händler befähigt, ihre eigene digitale Sichtbarkeit aufzubauen — unabhängig von Plattformvermittlern.</p>
   </div>
+
+  <div class="stat-strip">
+      <div class="stat-item">
+        <span class="stat-num">79%</span>
+        <span class="stat-label">der Händler erwarten<br>dramatischen Wandel</span>
+        <a class="stat-source" href="https://www.pwc.de/en/automotive-industry/the-future-of-automotive-retail.html" target="_blank">Quelle: PwC →</a>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">+43%</span>
+        <span class="stat-label">BEV-Wachstum —<br>19% Marktanteil</span>
+        <a class="stat-source" href="https://www.kba.de/DE/Presse/Pressemitteilungen/Fahrzeugzulassungen/2026/pm01_2026_n_12_25_pm_komplett.html" target="_blank">Quelle: KBA Jan. 2026 →</a>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2,3×</span>
+        <span class="stat-label">GW-Markt größer<br>als Neuwagenmarkt</span>
+        <a class="stat-source" href="https://www.kba.de/DE/Presse/Pressemitteilungen/Fahrzeugzulassungen/2026/pm01_2026_n_12_25_pm_komplett.html" target="_blank">Quelle: KBA Jan. 2026 →</a>
+      </div>
+    </div>
 
   <div class="section">
     <div class="section-title">Der Marktkontext — warum das relevant ist</div>
@@ -90,6 +121,7 @@
 
   <div class="section">
     <div class="section-title">Was Ihre Mitglieder davon haben</div>
+    <div class="claim-inline"><strong>Unter 7 € pro Lead — bis zu 5× günstiger als klassische Fahrzeugportale.<sup>*</sup></strong></div>
     <div class="results-grid">
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Einheitliche Kampagnenstandards im gesamten Händlernetz</div></div>
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Skalierbare Onboarding-Prozesse — Go-Live in 48 Stunden</div></div>
@@ -99,7 +131,7 @@
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Ausschließlich Automotive — kein Generalistik-Ansatz</div></div>
     </div>
     <div class="trust-block">
-      <div class="trust-label">Referenz<span>MAHAG Automotive</span></div>
+      <div class="trust-label"><img src="https://www.mahag.de/templates/yootheme/cache/a1/mahag-brand-a12d3e76.png" alt="MAHAG"><span>Referenz</span></div>
       <div class="trust-stats">
         <div class="ts"><span class="ts-num">+45%</span><span class="ts-label">Mehr Leads</span></div>
         <div class="ts"><span class="ts-num">−30%</span><span class="ts-label">Weniger Kosten</span></div>
@@ -108,8 +140,10 @@
     </div>
   </div>
 
+  <div class="page-footnote">* Aus echten Kundendaten — nicht aus Hochrechnungen.</div>
   <div class="footer">
-    <div class="footer-contact"><strong>AutoBoost · by Echomotion GmbH</strong><br><a href="https://echomotion.ai">echomotion.ai</a></div>
+    <div class="footer-contact"><strong>Autoboost · by Echomotion GmbH</strong><br><a href="https://echomotion.ai">echomotion.ai</a></div>
+    <img src="google-partner.svg" alt="Google Partner" class="google-partner-badge">
     <div class="footer-cta">Seite 1 / 2</div>
   </div>
 </div>
@@ -117,8 +151,8 @@
 <!-- PAGE 2 -->
 <div class="page">
   <div class="header">
-    <div><div class="brand-name">AutoBoost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
-    <div class="header-tag">Stärken Sie Ihr Händlernetz</div>
+    <div><div class="brand-name">Autoboost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
+    <div class="header-tag">Automobilverbände &amp; Netzwerke</div>
   </div>
 
   <div class="section">
@@ -140,10 +174,10 @@
   <div class="section">
     <div class="section-title">Ausblick — Weitere Kanäle &amp; Servicebereiche</div>
     <div class="outlook-grid">
-      <div class="oi"><div class="oi-dot"></div><div><h4>Meta Ads (Facebook &amp; Instagram)</h4><p>Awareness-Kampagnen für lokale Händler — relevant für Gebrauchtwagen und saisonale Aktionen.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>LinkedIn Ads</h4><p>B2B-Targeting für Gewerbe- und Flottenangebote im Händlernetz.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>Fahrzeug-Datenfeed-Management</h4><p>Standardisierte Feed-Distribution für Händlernetze — skalierbar und automatisiert.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>Google Business Profile</h4><p>Strukturierte Pflege aller Händlerstandorte — konsistente Standortdaten im Netzwerk.</p></div></div>
+      <div class="oi"><div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="4" height="10" rx="2" fill="#7C3AED"/><rect x="10" y="4" width="4" height="16" rx="2" fill="#7C3AED" opacity=".7"/><rect x="17" y="7" width="4" height="10" rx="2" fill="#06B6D4"/></svg></div><div class="oi-body"><h4>Meta Ads</h4><p>Awareness-Kampagnen für lokale Händler — relevant für Gebrauchtwagen und saisonale Aktionen.</p></div></div>
+      <div class="oi"><div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="9" width="20" height="13" rx="2" fill="#7C3AED" opacity=".15" stroke="#7C3AED" stroke-width="1.5"/><path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="14" x2="12" y2="16" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/></svg></div><div class="oi-body"><h4>LinkedIn Ads</h4><p>B2B-Targeting für Gewerbe- und Flottenangebote im Händlernetz.</p></div></div>
+      <div class="oi"><div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="6" rx="8" ry="3" fill="#7C3AED" opacity=".2" stroke="#7C3AED" stroke-width="1.5"/><path d="M4 6v4c0 1.657 3.582 3 8 3s8-1.343 8-3V6" stroke="#7C3AED" stroke-width="1.5"/><path d="M4 10v4c0 1.657 3.582 3 8 3s8-1.343 8-3v-4" stroke="#06B6D4" stroke-width="1.5"/></svg></div><div class="oi-body"><h4>Fahrzeug-Datenfeed-Management</h4><p>Standardisierte Feed-Distribution für Händlernetze — skalierbar und automatisiert.</p></div></div>
+      <div class="oi"><div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 14 6 14s6-9.5 6-14c0-3.314-2.686-6-6-6z" fill="#7C3AED" opacity=".2" stroke="#7C3AED" stroke-width="1.5"/><circle cx="12" cy="8" r="2.5" fill="#06B6D4"/></svg></div><div class="oi-body"><h4>Google Business Profile</h4><p>Strukturierte Pflege aller Händlerstandorte — konsistente Standortdaten im Netzwerk.</p></div></div>
     </div>
   </div>
 
@@ -158,26 +192,30 @@
       </li>
       <li class="tl-item">
         <div class="tl-left"><div class="tl-dot">2</div><div class="tl-line"></div></div>
-        <div class="tl-content"><h4>Pilotkonzept &amp; Rahmenvereinbarung <span class="tl-tag">Tag 1–2</span></h4><p>Standardisierte Konditionen für Verbandsmitglieder — vereinfachtes Onboarding für den Rollout.</p></div>
+        <div class="tl-content"><h4>Pilotkonzept &amp; Rahmenvereinbarung <span class="tl-tag ">Tag 1–2</span></h4><p>Standardisierte Konditionen für Verbandsmitglieder — vereinfachtes Onboarding für den Rollout.</p></div>
       </li>
       <li class="tl-item">
         <div class="tl-left"><div class="tl-dot">3</div><div class="tl-line"></div></div>
-        <div class="tl-content"><h4>Onboarding &amp; Go-Live <span class="tl-tag">Innerhalb 48h</span></h4><p>Kampagnen für Pilotbetriebe live — messbare Ergebnisse als Basis für breiteres Rollout.</p></div>
+        <div class="tl-content"><h4>Onboarding &amp; Go-Live <span class="tl-tag ">Innerhalb 48h</span></h4><p>Kampagnen für Pilotbetriebe live — messbare Ergebnisse als Basis für breiteres Rollout.</p></div>
       </li>
       <li class="tl-item">
         <div class="tl-left"><div class="tl-dot">4</div><div class="tl-line"></div></div>
-        <div class="tl-content"><h4>Reporting &amp; Rollout <span class="tl-tag">Laufend</span></h4><p>Aggregierte Kennzahlen über Mitgliedsbetriebe — Grundlage für weiteren Ausbau.</p></div>
+        <div class="tl-content"><h4>Reporting &amp; Rollout <span class="tl-tag ">Laufend</span></h4><p>Aggregierte Kennzahlen über Mitgliedsbetriebe — Grundlage für weiteren Ausbau.</p></div>
       </li>
       <li class="tl-item">
         <div class="tl-left"><div class="tl-dot">5</div><div class="tl-line"></div></div>
-        <div class="tl-content"><h4>Schulungsangebot für Mitglieder <span class="tl-tag">Optional</span></h4><p>Workshops zu Google Ads Grundlagen für Händler und deren Teams — flexibel zubuchbar.</p></div>
+        <div class="tl-content"><h4>Schulungsangebot für Mitglieder <span class="tl-tag ">Optional</span></h4><p>Workshops zu Google Ads Grundlagen für Händler und deren Teams — flexibel zubuchbar.</p></div>
       </li>
     </ul>
   </div>
 
   <div class="footer">
-    <div class="footer-contact"><strong>Moritz Weinert · AutoBoost by Echomotion</strong><br><a href="mailto:moritz@echomotion.de">moritz@echomotion.de</a> · <a href="https://echomotion.ai">echomotion.ai</a></div>
-    <div class="footer-cta">Kooperation besprechen</div>
+    <div class="footer-contact">
+      <strong>Moritz Weinert · Autoboost by Echomotion</strong><br>
+      <a href="mailto:moritz@echomotion.de">moritz@echomotion.de</a> · <a href="https://echomotion.ai">echomotion.ai</a>
+    </div>
+    <img src="google-partner.svg" alt="Google Partner" class="google-partner-badge">
+    <a href="https://calendar.app.google/kj1mgfZbqUX5aDtX8" target="_blank" class="footer-cta">Kooperation besprechen</a>
   </div>
 </div>
 
