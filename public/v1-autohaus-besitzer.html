@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>AutoBoost — Google Ads für Ihr Autohaus</title>
+<title>Autoboost — Mehr Umsatz für Ihr Autohaus</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
@@ -20,13 +20,13 @@
   .header-tag{background:var(--primary-light);color:var(--primary);border:1px solid var(--primary-mid);border-radius:5px;padding:4px 12px;font-size:8.5px;font-weight:700;letter-spacing:.3px;white-space:nowrap;align-self:flex-start}
 
   /* Hero */
-  .hero{margin-bottom:16px}
+  .hero{margin-bottom:12px}
   .hero h1{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:7px}
   .hero p{font-size:11px;color:var(--sub);line-height:1.75}
 
   /* Section */
-  .section{margin-bottom:16px}
-  .section-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid var(--primary-light)}
+  .section{margin-bottom:12px}
+  .section-title{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-top:10px;margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid var(--primary-light)}
 
   /* 2-col grid */
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:9px}
@@ -37,15 +37,16 @@
   .card p{font-size:10px;color:var(--sub);line-height:1.65}
 
   /* Results grid */
-  .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
   .ri{background:#faf9ff;border:1px solid var(--primary-light);border-radius:6px;padding:8px 10px;display:flex;align-items:flex-start;gap:9px}
   .ri-dot{width:7px;height:7px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:4px}
   .ri-text{font-size:10px;color:var(--sub);line-height:1.55}
 
   /* MAHAG trust block */
   .trust-block{background:#faf9ff;border:1.5px solid var(--primary-mid);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:16px}
-  .trust-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--primary);border-right:1px solid var(--primary-mid);padding-right:16px;white-space:nowrap;line-height:1.5}
-  .trust-label span{display:block;color:var(--muted);font-weight:400;font-size:8px;margin-top:1px}
+  .trust-label{border-right:1px solid var(--primary-mid);padding-right:16px;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .trust-label img{height:26px;object-fit:contain;display:block}
+  .trust-label span{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:400}
   .trust-stats{display:flex;flex:1;gap:0}
   .ts{flex:1;text-align:center;padding:0 12px;border-right:1px solid var(--primary-mid)}
   .ts:last-child{border-right:none}
@@ -60,9 +61,12 @@
 
   /* Outlook */
   .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .oi{background:#f9fafb;border:1px solid var(--border);border-radius:5px;padding:8px 11px;display:flex;gap:9px;align-items:flex-start}
-  .oi-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px}
-  .oi h4{font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px}
+  .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .oi{background:#faf9ff;border:1px solid var(--primary-mid);border-radius:7px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start}
+  .oi-icon{width:30px;height:30px;border-radius:6px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .oi-icon svg{width:16px;height:16px}
+  .oi-body h4{font-size:9.5px;font-weight:700;color:var(--primary);margin-bottom:2px}
+  .oi-body p{font-size:8px;color:var(--sub);line-height:1.5}
   .oi p{font-size:9.5px;color:var(--sub);line-height:1.55}
 
   /* Timeline */
@@ -81,8 +85,26 @@
 
   hr{border:none;border-top:1px solid var(--border);margin:13px 0}
 
+  /* Claim Box */
+  .claim-inline{border-left:3px solid var(--primary);padding:5px 0 5px 10px;margin-bottom:9px}
+  .claim-inline strong{font-size:12px;font-weight:800;color:var(--primary);line-height:1.3}
+  .claim-inline sup{font-size:7.5px;font-weight:400;color:var(--sub)}
+  .page-footnote{font-size:7.5px;color:var(--muted);margin-top:6px;padding-top:5px;border-top:1px solid var(--border)}
+
+
+  /* Stat Strip */
+  .stat-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--primary-light);border:1px solid var(--primary-mid);border-radius:7px;overflow:hidden;margin-bottom:16px}
+  .stat-item{padding:9px 12px;text-align:center;border-right:1px solid var(--primary-mid);position:relative}
+  .stat-item:last-child{border-right:none}
+  .stat-num{font-size:22px;font-weight:800;color:var(--primary);line-height:1;display:block;letter-spacing:-.5px}
+  .stat-label{font-size:8.5px;color:var(--sub);margin-top:3px;display:block;line-height:1.4}
+  .stat-source{font-size:6.5px;color:var(--primary);margin-top:2px;display:block;text-transform:uppercase;letter-spacing:.3px;text-decoration:underline;text-decoration-color:var(--primary-mid)}
+
+  /* Badge */
+  .google-partner-badge{height:87px;width:auto;display:block;align-self:center}
+
   /* Footer */
-  .footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end}
+  .footer{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
   .footer-contact{font-size:9px;color:var(--muted);line-height:1.8}
   .footer-contact strong{color:var(--text)}
   .footer-cta{background:var(--primary);color:white;border-radius:5px;padding:6px 15px;font-size:9px;font-weight:600}
@@ -93,27 +115,46 @@
 <!-- PAGE 1 -->
 <div class="page">
   <div class="header">
-    <div><div class="brand-name">AutoBoost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
-    <div class="header-tag">Google Ads für Ihr Autohaus</div>
+    <div><div class="brand-name">Autoboost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
+    <div class="header-tag">Mehr Umsatz für Ihr Autohaus</div>
   </div>
 
   <div class="hero">
     <h1>Mehr qualifizierte Kundenanfragen.<br>Weniger Streuverlust. Klare Ergebnisse.</h1>
-    <p>AutoBoost ist ein spezialisierter Google Ads Service für Autohäuser und Händlergruppen. Wir übernehmen die vollständige Planung, Einrichtung und laufende Optimierung Ihrer digitalen Werbung — mit dem Ziel, dass jeder investierte Euro messbar wirkt.</p>
+    <p>Autoboost ist ein spezialisierter Google Ads Service für Autohäuser und Händlergruppen. Wir übernehmen die vollständige Planung, Einrichtung und laufende Optimierung Ihrer digitalen Werbung — mit dem Ziel, dass jeder investierte Euro messbar wirkt.</p>
   </div>
+
+  <div class="stat-strip">
+      <div class="stat-item">
+        <span class="stat-num">79%</span>
+        <span class="stat-label">der Händler erwarten<br>dramatischen Wandel</span>
+        <a class="stat-source" href="https://www.pwc.de/en/automotive-industry/the-future-of-automotive-retail.html" target="_blank">Quelle: PwC →</a>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">+43%</span>
+        <span class="stat-label">BEV-Wachstum —<br>19% Marktanteil</span>
+        <a class="stat-source" href="https://www.kba.de/DE/Presse/Pressemitteilungen/Fahrzeugzulassungen/2026/pm01_2026_n_12_25_pm_komplett.html" target="_blank">Quelle: KBA Jan. 2026 →</a>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2,3×</span>
+        <span class="stat-label">GW-Markt größer<br>als Neuwagenmarkt</span>
+        <a class="stat-source" href="https://www.kba.de/DE/Presse/Pressemitteilungen/Fahrzeugzulassungen/2026/pm01_2026_n_12_25_pm_komplett.html" target="_blank">Quelle: KBA Jan. 2026 →</a>
+      </div>
+    </div>
 
   <div class="section">
     <div class="section-title">Was wir für Sie übernehmen</div>
     <div class="two-col">
       <div class="card"><h3>Kampagnen-Strategie &amp; Setup</h3><p>Individuelle Kampagnenstruktur je Marke, Standort und Zielgruppe. Keine Standardlösung — aufgebaut auf Ihr konkretes Geschäftsmodell.</p></div>
       <div class="card"><h3>Vehicle Ads &amp; Performance Max</h3><p>Ihr Fahrzeugbestand erscheint direkt in den Google-Suchergebnissen — mit Bild, Preis und Verfügbarkeit bei echter Kaufabsicht.</p></div>
-      <div class="card"><h3>Laufende Optimierung</h3><p>Regelmäßige Anpassung von Geboten, Budgets, Keywords und Anzeigentexten auf Basis echter Leistungsdaten — keine Autopilot-Verwaltung.</p></div>
+      <div class="card"><h3>Laufende Optimierung</h3><p>Aktives Management auf Basis echter Leistungsdaten — Gebote, Budgets, Keywords und Anzeigentexte werden kontinuierlich angepasst.</p></div>
       <div class="card"><h3>Transparentes Reporting</h3><p>Sie sehen jederzeit, was Ihr Budget bewirkt: Leads, Kosten pro Anfrage, Klickentwicklung — ohne Fachjargon.</p></div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Typische Ergebnisse unserer Kunden</div>
+    <div class="claim-inline"><strong>Unter 7 € pro Lead — bis zu 5× günstiger als klassische Fahrzeugportale.<sup>*</sup></strong></div>
     <div class="results-grid">
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Messbare Senkung der Kosten pro qualifiziertem Lead</div></div>
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Höhere Sichtbarkeit bei marken- und modellspezifischen Suchanfragen</div></div>
@@ -122,9 +163,10 @@
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Schnelle Reaktion auf Hersteller-Aktionen und Lagerfahrzeuge</div></div>
       <div class="ri"><div class="ri-dot"></div><div class="ri-text">Vollständige Budgetkontrolle mit monatlichem Reporting</div></div>
     </div>
+    <!-- CPL Claim -->
     <!-- MAHAG Trust -->
     <div class="trust-block">
-      <div class="trust-label">Referenz<span>MAHAG Automotive</span></div>
+      <div class="trust-label"><img src="https://www.mahag.de/templates/yootheme/cache/a1/mahag-brand-a12d3e76.png" alt="MAHAG"><span>Referenz</span></div>
       <div class="trust-stats">
         <div class="ts"><span class="ts-num">+45%</span><span class="ts-label">Mehr Leads</span></div>
         <div class="ts"><span class="ts-num">−30%</span><span class="ts-label">Weniger Kosten</span></div>
@@ -133,8 +175,10 @@
     </div>
   </div>
 
+  <div class="page-footnote">* Aus echten Kundendaten — nicht aus Hochrechnungen.</div>
   <div class="footer">
-    <div class="footer-contact"><strong>AutoBoost · by Echomotion GmbH</strong><br><a href="https://echomotion.ai">echomotion.ai</a></div>
+    <div class="footer-contact"><strong>Autoboost · by Echomotion GmbH</strong><br><a href="https://echomotion.ai">echomotion.ai</a></div>
+    <img src="google-partner.svg" alt="Google Partner" class="google-partner-badge">
     <div class="footer-cta">Seite 1 / 2</div>
   </div>
 </div>
@@ -142,20 +186,20 @@
 <!-- PAGE 2 -->
 <div class="page">
   <div class="header">
-    <div><div class="brand-name">AutoBoost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
-    <div class="header-tag">Google Ads für Ihr Autohaus</div>
+    <div><div class="brand-name">Autoboost</div><div class="brand-sub">by Echomotion · Google Ads für Automotive Retail</div></div>
+    <div class="header-tag">Mehr Umsatz für Ihr Autohaus</div>
   </div>
 
   <div class="section">
     <div class="section-title">Unser Leistungsumfang im Überblick</div>
     <div class="sl-grid">
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Google Search Kampagnen</span></div>
-      <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Performance Max (KI-gestützt)</span></div>
+      <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Performance Max</span></div>
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Vehicle Listing Ads</span></div>
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Brand-Schutz Kampagnen</span></div>
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Conversion Tracking Setup</span></div>
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Account-Audit &amp; Analyse</span></div>
-      <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Budget- &amp; Jahresplanung</span></div>
+      <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Persönlicher Ansprechpartner</span></div>
       <div class="sl-item"><div class="sl-dot"></div><span class="sl-text">Monatliches Performance-Reporting</span></div>
     </div>
   </div>
@@ -165,10 +209,37 @@
   <div class="section">
     <div class="section-title">Ausblick — Weitere Kanäle &amp; Services</div>
     <div class="outlook-grid">
-      <div class="oi"><div class="oi-dot"></div><div><h4>Meta Ads (Facebook &amp; Instagram)</h4><p>Reichweiten- und Retargeting-Kampagnen — besonders wirksam für Gebrauchtwagen und lokale Awareness.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>LinkedIn Ads</h4><p>Gezieltes B2B-Targeting für Gewerbe- und Flottenkunden. Relevant für Händler mit Flottenangebot.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>Fahrzeug-Datenfeed-Management</h4><p>Automatisierte Pflege Ihres Bestands an Google Merchant Center und weitere Plattformen.</p></div></div>
-      <div class="oi"><div class="oi-dot"></div><div><h4>Google Business Profile</h4><p>Optimierung und laufende Pflege Ihres Google-Unternehmensprofils für lokale Sichtbarkeit.</p></div></div>
+      <div class="oi">
+        <div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="7" width="4" height="10" rx="2" fill="#7C3AED"/>
+  <rect x="10" y="4" width="4" height="16" rx="2" fill="#7C3AED" opacity=".7"/>
+  <rect x="17" y="7" width="4" height="10" rx="2" fill="#06B6D4"/>
+</svg></div>
+        <div class="oi-body"><h4>Meta Ads</h4><p>Retargeting &amp; Reichweite auf Facebook und Instagram — ideal für Gebrauchtwagen.</p></div>
+      </div>
+      <div class="oi">
+        <div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="9" width="20" height="13" rx="2" fill="#7C3AED" opacity=".15" stroke="#7C3AED" stroke-width="1.5"/>
+  <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="12" y1="14" x2="12" y2="16" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+        <div class="oi-body"><h4>LinkedIn Ads</h4><p>B2B-Targeting für Gewerbe- und Flottenkunden.</p></div>
+      </div>
+      <div class="oi">
+        <div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="12" cy="6" rx="8" ry="3" fill="#7C3AED" opacity=".2" stroke="#7C3AED" stroke-width="1.5"/>
+  <path d="M4 6v4c0 1.657 3.582 3 8 3s8-1.343 8-3V6" stroke="#7C3AED" stroke-width="1.5"/>
+  <path d="M4 10v4c0 1.657 3.582 3 8 3s8-1.343 8-3v-4" stroke="#06B6D4" stroke-width="1.5"/>
+</svg></div>
+        <div class="oi-body"><h4>Fahrzeug-Datenfeed</h4><p>Automatisierte Bestandspflege für Google Merchant Center &amp; weitere Portale.</p></div>
+      </div>
+      <div class="oi">
+        <div class="oi-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2C8.686 2 6 4.686 6 8c0 4.5 6 14 6 14s6-9.5 6-14c0-3.314-2.686-6-6-6z" fill="#7C3AED" opacity=".2" stroke="#7C3AED" stroke-width="1.5"/>
+  <circle cx="12" cy="8" r="2.5" fill="#06B6D4"/>
+</svg></div>
+        <div class="oi-body"><h4>Google Business Profile</h4><p>Laufende Optimierung für maximale lokale Sichtbarkeit.</p></div>
+      </div>
     </div>
   </div>
 
@@ -202,10 +273,11 @@
 
   <div class="footer">
     <div class="footer-contact">
-      <strong>Moritz Weinert · AutoBoost by Echomotion</strong><br>
+      <strong>Moritz Weinert · Autoboost by Echomotion</strong><br>
       <a href="mailto:moritz@echomotion.de">moritz@echomotion.de</a> · <a href="https://echomotion.ai">echomotion.ai</a>
     </div>
-    <div class="footer-cta">Jetzt Gespräch anfragen</div>
+    <img src="google-partner.svg" alt="Google Partner" class="google-partner-badge">
+    <a href="https://calendar.app.google/kj1mgfZbqUX5aDtX8" target="_blank" class="footer-cta">Jetzt Gespräch anfragen</a>
   </div>
 </div>
 
