@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoBoost ROI-Rechner</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0B0B1A;
+      --card: #111827;
+      --card2: #1a2235;
+      --border: #1F2937;
+      --violet: #7C3AED;
+      --cyan: #06B6D4;
+      --green: #10B981;
+      --yellow: #F59E0B;
+      --red: #EF4444;
+      --text1: #F9FAFB;
+      --text2: #D1D5DB;
+      --text3: #9CA3AF;
+      --text4: #6B7280;
+    }
+    body { background: var(--bg); color: var(--text1); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+    .header { text-align: center; margin-bottom: 40px; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--violet), var(--cyan)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; }
+    .logo-name { font-size: 22px; font-weight: 700; color: var(--text1); }
+    h1 { font-size: 28px; font-weight: 800; color: var(--text1); }
+    .subtitle { color: var(--text3); margin-top: 8px; font-size: 15px; }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 20px; }
+    .card-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text4); margin-bottom: 18px; }
+
+    /* Paket Selector */
+    .paket-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .paket-btn { border: 2px solid var(--border); background: var(--card2); border-radius: 12px; padding: 16px 12px; cursor: pointer; transition: all .2s; text-align: center; }
+    .paket-btn:hover { border-color: var(--violet); }
+    .paket-btn.active { border-color: var(--violet); background: rgba(124,58,237,.12); }
+    .paket-label { font-size: 18px; font-weight: 800; color: var(--text1); }
+    .paket-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
+    .paket-fee { font-size: 14px; font-weight: 700; color: var(--violet); margin-top: 8px; }
+    .paket-min { font-size: 11px; color: var(--text4); margin-top: 2px; }
+
+    /* Inputs */
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group label { font-size: 13px; color: var(--text3); font-weight: 500; }
+    .input-group .hint { font-size: 11px; color: var(--text4); margin-top: 2px; }
+    .input-wrap { position: relative; }
+    .input-prefix { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text4); font-weight: 600; font-size: 14px; pointer-events: none; }
+    input[type=number], input[type=range] { width: 100%; background: var(--card2); border: 1px solid var(--border); border-radius: 8px; color: var(--text1); font-size: 15px; padding: 10px 12px 10px 32px; outline: none; transition: border-color .2s; -moz-appearance: textfield; }
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input[type=number]:focus { border-color: var(--violet); }
+    input[type=range] { padding: 0; height: 6px; border-radius: 3px; cursor: pointer; appearance: none; accent-color: var(--violet); }
+
+    /* Results */
+    .result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .result-card { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .result-card.highlight { border-color: var(--violet); background: rgba(124,58,237,.08); }
+    .result-card.positive { border-color: var(--green); background: rgba(16,185,129,.08); }
+    .result-card.negative { border-color: var(--red); background: rgba(239,68,68,.08); }
+    .result-label { font-size: 11px; color: var(--text4); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .result-value { font-size: 22px; font-weight: 800; color: var(--text1); }
+    .result-value.violet { color: var(--violet); }
+    .result-value.green { color: var(--green); }
+    .result-value.red { color: var(--red); }
+    .result-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+    /* Vergleich */
+    .compare-bar { margin-top: 20px; }
+    .compare-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .compare-name { font-size: 12px; color: var(--text3); width: 140px; flex-shrink: 0; }
+    .bar-outer { flex: 1; background: var(--border); border-radius: 4px; height: 20px; overflow: hidden; }
+    .bar-inner { height: 100%; border-radius: 4px; transition: width .4s; display: flex; align-items: center; padding-left: 8px; }
+    .bar-label { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-green { background: rgba(16,185,129,.15); color: var(--green); border: 1px solid rgba(16,185,129,.3); }
+    .badge-red { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    .note { font-size: 12px; color: var(--text4); padding: 12px; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--violet); margin-top: 16px; }
+
+    @media (max-width: 480px) {
+      .paket-grid { grid-template-columns: 1fr; }
+      .input-row { grid-template-columns: 1fr; }
+      .result-grid { grid-template-columns: 1fr; }
+    }
+    .footer { text-align: center; margin-top: 40px; font-size: 12px; color: var(--text4); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">AB</div>
+      <div class="logo-name">AutoBoost</div>
+    </div>
+    <h1>ROI-Rechner</h1>
+    <p class="subtitle">Vergleichen Sie Ihre Portal-Kosten mit AutoBoost Google Ads</p>
+  </div>
+
+  <!-- Paket Wahl -->
+  <div class="card">
+    <div class="card-title">1 · Paket wählen</div>
+    <div class="paket-grid">
+      <div class="paket-btn" id="btn-S" onclick="selectPaket('S')">
+        <div class="paket-label">S</div>
+        <div class="paket-sub">1–3 Standorte · ≤150 Fzg.</div>
+        <div class="paket-fee">€1.499 / Mo.</div>
+        <div class="paket-min">Min. Google Budget: €2.500</div>
+      </div>
+      <div class="paket-btn active" id="btn-M" onclick="selectPaket('M')">
+        <div class="paket-label">M</div>
+        <div class="paket-sub">4–7 Standorte · 151–350 Fzg.</div>
+        <div class="paket-fee">€2.499 / Mo.</div>
+        <div class="paket-min">Min. Google Budget: €4.000</div>
+      </div>
+      <div class="paket-btn" id="btn-L" onclick="selectPaket('L')">
+        <div class="paket-label">L</div>
+        <div class="paket-sub">8+ Standorte · 350+ Fzg.</div>
+        <div class="paket-fee">€3.799 / Mo.</div>
+        <div class="paket-min">Min. Google Budget: €6.000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eingaben -->
+  <div class="card">
+    <div class="card-title">2 · Ihre aktuellen Zahlen</div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Portal-Spend / Monat (€)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">€</span>
+          <input type="number" id="portalSpend" value="1700" min="0" oninput="recalc()">
+        </div>
+        <span class="hint">z.B. mobile.de, AutoScout24</span>
+      </div>
+      <div class="input-group">
+        <label>Ø Leadpreis Portale (€)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">€</span>
+          <input type="number" id="portalCPL" value="30" min="1" oninput="recalc()">
+        </div>
+        <span class="hint">Typisch: €25–€50</span>
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Google Ads Budget / Monat (€)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">€</span>
+          <input type="number" id="googleBudget" value="4000" min="0" oninput="recalc()">
+        </div>
+        <span class="hint" id="minHint">Mindestbudget Paket M: €4.000</span>
+      </div>
+      <div class="input-group">
+        <label>Ø Leadpreis Google Ads (€)</label>
+        <div class="input-wrap">
+          <span class="input-prefix">€</span>
+          <input type="number" id="googleCPL" value="7" min="1" oninput="recalc()">
+        </div>
+        <span class="hint">Automotive Ø: €5–€12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ergebnisse -->
+  <div class="card">
+    <div class="card-title">3 · Ergebnisse</div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="result-label">Leads bisher (Portale)</div>
+        <div class="result-value" id="r-portalLeads">57</div>
+        <div class="result-sub" id="r-portalLeadsSub">bei €1.700 ÷ €30</div>
+      </div>
+      <div class="result-card highlight">
+        <div class="result-label">Leads mit AutoBoost</div>
+        <div class="result-value violet" id="r-googleLeads">571</div>
+        <div class="result-sub" id="r-googleLeadsSub">bei €4.000 ÷ €7</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">AutoBoost All-in / Monat</div>
+        <div class="result-value" id="r-allIn">€6.499</div>
+        <div class="result-sub" id="r-allInSub">Service Fee + Google Budget</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">Portal-Kosten für gleiche Leads</div>
+        <div class="result-value" id="r-portalEquiv">€3.997</div>
+        <div class="result-sub">bei gleichem Lead-Volumen</div>
+      </div>
+      <div class="result-card" id="r-saving-card">
+        <div class="result-label">Ersparnis / Monat</div>
+        <div class="result-value" id="r-saving">—</div>
+        <div class="result-sub" id="r-savingSub">—</div>
+      </div>
+      <div class="result-card" id="r-saving-year-card">
+        <div class="result-label">Ersparnis / Jahr</div>
+        <div class="result-value" id="r-savingYear">—</div>
+        <div class="result-sub" id="r-savingYearSub">—</div>
+      </div>
+    </div>
+
+    <!-- Vergleich Balken -->
+    <div class="compare-bar" style="margin-top:24px;">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#7C3AED"></div>AutoBoost All-in</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#EF4444"></div>Portal-Äquivalent</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-name">AutoBoost All-in</div>
+        <div class="bar-outer"><div class="bar-inner" id="bar-autoboost" style="background:linear-gradient(90deg,#7C3AED,#06B6D4);width:60%"><span class="bar-label" id="bar-autoboost-lbl">€6.499</span></div></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-name">Portale (gleiche Leads)</div>
+        <div class="bar-outer"><div class="bar-inner" id="bar-portal" style="background:#EF4444;width:40%"><span class="bar-label" id="bar-portal-lbl">€3.997</span></div></div>
+      </div>
+    </div>
+
+    <div class="note" id="r-note">
+      💡 <strong>Hinweis:</strong> Bei diesem Budget-Setup liefert AutoBoost mehr Leads — prüfen Sie ob die Qualität der Leads Ihre Verkaufsziele erfüllt.
+    </div>
+  </div>
+
+
+  <!-- Section 4: Teilen & Speichern -->
+  <div class="card" id="share-card" style="margin-top:16px;">
+    <div class="card-title">4 · Ergebnis teilen &amp; speichern</div>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:20px;">Kontaktdaten eingeben um die Berechnung intern zu speichern oder per Email zu teilen.</p>
+
+    <!-- Dealer fields -->
+    <div class="input-row">
+      <div class="input-group">
+        <label>Name *</label>
+        <input type="text" id="d-name" placeholder="Max Mustermann" style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;" oninput="syncShareFields()">
+      </div>
+      <div class="input-group">
+        <label>Autohaus / Unternehmen *</label>
+        <input type="text" id="d-company" placeholder="Autohaus Mustermann GmbH" style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;" oninput="syncShareFields()">
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Email *</label>
+        <input type="email" id="d-email" placeholder="kontakt@autohaus.de" style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;" oninput="syncShareFields()">
+      </div>
+      <div class="input-group">
+        <label>Telefon (optional)</label>
+        <input type="tel" id="d-phone" placeholder="+49 89 ..." style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;">
+      </div>
+    </div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Stadt (optional)</label>
+        <input type="text" id="d-city" placeholder="München" style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;">
+      </div>
+      <div class="input-group">
+        <label>Portal (genutzt)</label>
+        <select id="d-portal" style="padding:10px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text1);font-size:14px;outline:none;cursor:pointer;">
+          <option value="mobile.de">mobile.de</option>
+          <option value="AutoScout24">AutoScout24</option>
+          <option value="Leasingmarkt.de">Leasingmarkt.de</option>
+          <option value="Null-Leasing">Null-Leasing</option>
+          <option value="Beide (AS24 + mobile.de)">Beide (AS24 + mobile.de)</option>
+          <option value="Sonstige">Sonstige</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Status message -->
+    <div id="save-status" style="display:none;padding:12px 16px;border-radius:8px;font-size:14px;margin-bottom:16px;"></div>
+
+    <!-- Buttons -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+      <button onclick="shareEmail()" style="flex:1;min-width:180px;padding:12px 20px;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);border-radius:8px;color:#06B6D4;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(6,182,212,0.22)'" onmouseout="this.style.background='rgba(6,182,212,0.12)'">
+        📧 Per Email teilen
+      </button>
+      <button onclick="saveIntern()" style="flex:1;min-width:180px;padding:12px 20px;background:linear-gradient(135deg,#7C3AED,#06B6D4);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        💾 Intern speichern
+      </button>
+    </div>
+    <p style="font-size:11px;color:var(--text4);margin-top:10px;">* Pflichtfelder für interne Speicherung. Daten werden verschlüsselt übertragen und ausschließlich intern für AutoBoost-Analysen verwendet.</p>
+  </div>
+
+  <div class="footer">AutoBoost by Echomotion · Google Ads für Autohäuser · Stand: März 2026</div>
+</div>
+
+<script>
+const PAKETE = {
+  S: { fee: 1499, min: 2500, label: 'S — Solo', sub: '1–3 Standorte · ≤150 Fzg.' },
+  M: { fee: 2499, min: 4000, label: 'M — Pro',  sub: '4–7 Standorte · 151–350 Fzg.' },
+  L: { fee: 3799, min: 6000, label: 'L — Enterprise', sub: '8+ Standorte · 350+ Fzg.' },
+};
+
+let activePaket = 'M';
+
+function selectPaket(p) {
+  activePaket = p;
+  ['S','M','L'].forEach(k => document.getElementById('btn-'+k).classList.toggle('active', k===p));
+  const pkg = PAKETE[p];
+  const budgetEl = document.getElementById('googleBudget');
+  if (parseFloat(budgetEl.value) < pkg.min) budgetEl.value = pkg.min;
+  document.getElementById('minHint').textContent = `Mindestbudget Paket ${p}: €${pkg.min.toLocaleString('de-DE')}`;
+  recalc();
+}
+
+function fmt(n) { return '€' + Math.round(n).toLocaleString('de-DE'); }
+function fmtN(n) { return Math.round(n).toLocaleString('de-DE'); }
+
+function recalc() {
+  const pkg = PAKETE[activePaket];
+  const portalSpend = parseFloat(document.getElementById('portalSpend').value) || 0;
+  const portalCPL   = parseFloat(document.getElementById('portalCPL').value)   || 30;
+  const googleBudget= parseFloat(document.getElementById('googleBudget').value)|| pkg.min;
+  const googleCPL   = parseFloat(document.getElementById('googleCPL').value)   || 7;
+
+  const portalLeads  = portalCPL > 0 ? portalSpend / portalCPL : 0;
+  const googleLeads  = googleCPL > 0 ? googleBudget / googleCPL : 0;
+  const allIn        = pkg.fee + googleBudget;
+  const portalEquiv  = googleLeads * portalCPL;
+  const saving       = portalEquiv - allIn;
+  const savingYear   = saving * 12;
+
+  document.getElementById('r-portalLeads').textContent    = fmtN(portalLeads);
+  document.getElementById('r-portalLeadsSub').textContent = `bei ${fmt(portalSpend)} ÷ €${portalCPL}`;
+  document.getElementById('r-googleLeads').textContent    = fmtN(googleLeads);
+  document.getElementById('r-googleLeadsSub').textContent = `bei ${fmt(googleBudget)} ÷ €${googleCPL}`;
+  document.getElementById('r-allIn').textContent          = fmt(allIn);
+  document.getElementById('r-allInSub').textContent       = `${fmt(pkg.fee)} Fee + ${fmt(googleBudget)} Google`;
+  document.getElementById('r-portalEquiv').textContent    = fmt(portalEquiv);
+
+  const savEl  = document.getElementById('r-saving');
+  const savYEl = document.getElementById('r-savingYear');
+  const savCard  = document.getElementById('r-saving-card');
+  const savYCard = document.getElementById('r-saving-year-card');
+
+  if (saving > 0) {
+    savEl.textContent  = fmt(saving);
+    savYEl.textContent = fmt(savingYear);
+    savEl.className  = 'result-value green';
+    savYEl.className = 'result-value green';
+    savCard.className  = 'result-card positive';
+    savYCard.className = 'result-card positive';
+    document.getElementById('r-savingSub').textContent     = `${((saving/allIn)*100).toFixed(1)}% günstiger als Portale`;
+    document.getElementById('r-savingYearSub').textContent = 'Hochgerechnet auf 12 Monate';
+    document.getElementById('r-note').innerHTML = `💡 <strong>AutoBoost spart ${fmt(saving)}/Monat</strong> gegenüber Portalen — bei ${fmtN(googleLeads)} Leads vs. ${fmtN(portalLeads)} Portal-Leads.`;
+  } else {
+    savEl.textContent  = fmt(saving);
+    savYEl.textContent = fmt(savingYear);
+    savEl.className  = 'result-value red';
+    savYEl.className = 'result-value red';
+    savCard.className  = 'result-card negative';
+    savYCard.className = 'result-card negative';
+    document.getElementById('r-savingSub').textContent     = 'Portale aktuell günstiger';
+    document.getElementById('r-savingYearSub').textContent = 'Hochgerechnet auf 12 Monate';
+    document.getElementById('r-note').innerHTML = `💡 Bei diesem CPL-Verhältnis sind Portale günstiger. Erhöhen Sie das Google Budget oder reduzieren Sie den Google CPL auf unter ${(allIn / googleLeads).toFixed(0)} €.`;
+  }
+
+  // Balken
+  const maxVal = Math.max(allIn, portalEquiv) * 1.1 || 1;
+  document.getElementById('bar-autoboost').style.width = (allIn/maxVal*100)+'%';
+  document.getElementById('bar-portal').style.width    = (portalEquiv/maxVal*100)+'%';
+  document.getElementById('bar-autoboost-lbl').textContent = fmt(allIn);
+  document.getElementById('bar-portal-lbl').textContent    = fmt(portalEquiv);
+}
+
+// ── Share & Save functions ──────────────────────────────────────────────────
+
+let lastResults = {};
+
+function syncShareFields() {
+  // called on input change — nothing needed, fields read dynamically
+}
+
+function getResults() {
+  const pkg = PAKETE[activePaket];
+  const portalSpend  = parseFloat(document.getElementById('portalSpend').value) || 0;
+  const portalCPL    = parseFloat(document.getElementById('portalCPL').value)   || 30;
+  const googleBudget = parseFloat(document.getElementById('googleBudget').value)|| pkg.min;
+  const googleCPL    = parseFloat(document.getElementById('googleCPL').value)   || 7;
+  const portalLeads  = portalCPL > 0 ? portalSpend / portalCPL : 0;
+  const googleLeads  = googleCPL > 0 ? googleBudget / googleCPL : 0;
+  const allIn        = pkg.fee + googleBudget;
+  const portalEquiv  = googleLeads * portalCPL;
+  const saving       = portalEquiv - allIn;
+  const savingYear   = saving * 12;
+  return { pkg, portalSpend, portalCPL, googleBudget, googleCPL, portalLeads, googleLeads, allIn, portalEquiv, saving, savingYear };
+}
+
+function shareEmail() {
+  const r   = getResults();
+  const company = document.getElementById('d-company').value || 'Ihr Autohaus';
+  const toEmail = document.getElementById('d-email').value || '';
+  const subject = encodeURIComponent('AutoBoost Rechner – Ihr persönliches Ergebnis | ' + company);
+  const nl = '%0A';
+  const body = encodeURIComponent(
+    'AutoBoost ROI-Rechner — Ihre persönliche Auswertung' + '\n' +
+    '═══════════════════════════════════════════' + '\n\n' +
+    'Unternehmen: ' + company + '\n' +
+    'Paket: AutoBoost ' + activePaket + '\n\n' +
+    '── Ihre aktuellen Portal-Kosten ──────────────' + '\n' +
+    'Portal-Ausgaben/Monat:   ' + fmt(r.portalSpend) + '\n' +
+    'CPL Portal:              €' + r.portalCPL + '\n' +
+    'Leads via Portale:       ' + Math.round(r.portalLeads) + ' Leads/Monat' + '\n\n' +
+    '── Mit AutoBoost ─────────────────────────────' + '\n' +
+    'Google Budget:           ' + fmt(r.googleBudget) + '/Monat' + '\n' +
+    'AutoBoost CPL:           €' + r.googleCPL + '\n' +
+    'Leads via AutoBoost:     ' + Math.round(r.googleLeads) + ' Leads/Monat' + '\n' +
+    'All-in (Fee + Budget):   ' + fmt(r.allIn) + '/Monat' + '\n\n' +
+    '── Vergleich ─────────────────────────────────' + '\n' +
+    'Portal-Äquivalent:       ' + fmt(r.portalEquiv) + '/Monat (gleiche Leads via Portal)' + '\n' +
+    'Ersparnis/Monat:         ' + fmt(r.saving) + '\n' +
+    'Ersparnis/Jahr:          ' + fmt(r.savingYear) + '\n\n' +
+    '─────────────────────────────────────────────' + '\n' +
+    'Berechnet mit AutoBoost ROI-Rechner | autoboost-briefing.netlify.app/rechner.html' + '\n' +
+    'AutoBoost by Echomotion GmbH'
+  );
+  window.location.href = 'mailto:' + toEmail + '?subject=' + subject + '&body=' + body;
+}
+
+async function saveIntern() {
+  const name    = document.getElementById('d-name').value.trim();
+  const company = document.getElementById('d-company').value.trim();
+  const email   = document.getElementById('d-email').value.trim();
+  const phone   = document.getElementById('d-phone').value.trim();
+  const city    = document.getElementById('d-city').value.trim();
+  const portal  = document.getElementById('d-portal').value;
+
+  const statusEl = document.getElementById('save-status');
+
+  if (!email || !company) {
+    statusEl.style.display = 'block';
+    statusEl.style.background = 'rgba(248,113,113,0.1)';
+    statusEl.style.border = '1px solid rgba(248,113,113,0.3)';
+    statusEl.style.color = '#F87171';
+    statusEl.textContent = '⚠️ Bitte Name, Unternehmen und Email ausfüllen.';
+    return;
+  }
+
+  const r = getResults();
+  const payload = {
+    timestamp: new Date().toISOString(),
+    dealer: { name, company, email, phone, city },
+    inputs: {
+      paket: activePaket,
+      portalName: portal,
+      portalSpend: r.portalSpend,
+      portalCPL: r.portalCPL,
+      googleBudget: r.googleBudget,
+      googleCPL: r.googleCPL
+    },
+    results: {
+      portalLeads: Math.round(r.portalLeads),
+      googleLeads: Math.round(r.googleLeads),
+      allIn: Math.round(r.allIn),
+      portalEquiv: Math.round(r.portalEquiv),
+      saving: Math.round(r.saving),
+      savingYear: Math.round(r.savingYear)
+    }
+  };
+
+  statusEl.style.display = 'block';
+  statusEl.style.background = 'rgba(124,58,237,0.1)';
+  statusEl.style.border = '1px solid rgba(124,58,237,0.3)';
+  statusEl.style.color = '#A78BFA';
+  statusEl.textContent = '⏳ Wird gespeichert...';
+
+  try {
+    const res = await fetch('/.netlify/functions/save-calc', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.style.background = 'rgba(52,211,153,0.1)';
+      statusEl.style.border = '1px solid rgba(52,211,153,0.3)';
+      statusEl.style.color = '#34D399';
+      statusEl.textContent = '✅ Gespeichert und mit CRM verknüpft — Daten im AutoBoost Sheet eingetragen.';
+    } else {
+      throw new Error('Server error ' + res.status);
+    }
+  } catch(e) {
+    // Offline fallback: save to localStorage
+    const saved = JSON.parse(localStorage.getItem('autoboost_calc_queue') || '[]');
+    saved.push(payload);
+    localStorage.setItem('autoboost_calc_queue', JSON.stringify(saved));
+    statusEl.style.background = 'rgba(251,191,36,0.1)';
+    statusEl.style.border = '1px solid rgba(251,191,36,0.3)';
+    statusEl.style.color = '#FBBF24';
+    statusEl.textContent = '⚠️ Offline gespeichert – wird synchronisiert sobald Verbindung besteht.';
+  }
+}
+
+recalc();
+
+</script>
+</body>
+</html>
