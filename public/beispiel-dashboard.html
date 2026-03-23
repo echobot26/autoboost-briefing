@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoBoost Dashboard – Beispiel</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0B0B1A;
+      --card: #111827;
+      --card2: #1a2235;
+      --border: #1F2937;
+      --violet: #7C3AED;
+      --cyan: #06B6D4;
+      --green: #10B981;
+      --yellow: #F59E0B;
+      --red: #EF4444;
+      --text1: #F9FAFB;
+      --text2: #D1D5DB;
+      --text3: #9CA3AF;
+      --text4: #6B7280;
+    }
+    body { background: var(--bg); color: var(--text1); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+
+    /* TOP NAV */
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 12px; color: #fff;
+    }
+    .logo-name { font-size: 18px; font-weight: 700; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .badge-demo {
+      background: rgba(245,158,11,0.15);
+      color: var(--yellow);
+      border: 1px solid rgba(245,158,11,0.3);
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .date-label { font-size: 13px; color: var(--text4); }
+
+    /* LAYOUT */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* HEADER SECTION */
+    .page-header { margin-bottom: 24px; }
+    .page-title { font-size: 22px; font-weight: 800; color: var(--text1); }
+    .page-sub { font-size: 14px; color: var(--text3); margin-top: 4px; }
+
+    /* PERIOD TABS */
+    .period-tabs { display: flex; gap: 6px; margin-bottom: 24px; }
+    .period-tab {
+      padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border);
+      background: var(--card); color: var(--text3);
+      transition: all .15s;
+    }
+    .period-tab.active {
+      background: var(--violet); border-color: var(--violet); color: #fff;
+    }
+
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 760px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .kpi-label { font-size: 12px; color: var(--text4); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+    .kpi-value { font-size: 28px; font-weight: 800; color: var(--text1); line-height: 1; }
+    .kpi-unit { font-size: 15px; font-weight: 600; color: var(--text3); margin-left: 2px; }
+    .kpi-delta {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; font-weight: 700;
+      margin-top: 8px; padding: 2px 8px; border-radius: 20px;
+    }
+    .kpi-delta.up { background: rgba(16,185,129,.12); color: var(--green); }
+    .kpi-delta.down { background: rgba(239,68,68,.10); color: var(--red); }
+    .kpi-delta.neutral { background: rgba(107,114,128,.12); color: var(--text4); }
+    .kpi-sub { font-size: 11px; color: var(--text4); margin-top: 4px; }
+
+    /* CHART AREA */
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .chart-title { font-size: 15px; font-weight: 700; color: var(--text1); }
+    .chart-subtitle { font-size: 12px; color: var(--text4); margin-top: 2px; }
+    .chart-legend { display: flex; gap: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* SVG bar chart */
+    .bar-chart { width: 100%; overflow: hidden; }
+    .bar-chart svg { width: 100%; }
+
+    /* 2-col grid */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* Campaign table */
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    .table-title { font-size: 15px; font-weight: 700; color: var(--text1); margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { font-size: 11px; font-weight: 600; color: var(--text4); text-transform: uppercase; letter-spacing: 0.07em; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+    td { font-size: 13px; color: var(--text2); padding: 11px 10px; border-bottom: 1px solid rgba(31,41,55,0.6); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .campaign-name { font-weight: 600; color: var(--text1); }
+    .status-pill {
+      display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+    }
+    .status-active { background: rgba(16,185,129,.12); color: var(--green); }
+    .status-paused { background: rgba(107,114,128,.12); color: var(--text4); }
+    .num { font-weight: 700; color: var(--text1); }
+    .num-green { font-weight: 700; color: var(--green); }
+    .num-yellow { font-weight: 700; color: var(--yellow); }
+
+    /* Top keywords */
+    .keyword-list { display: flex; flex-direction: column; gap: 10px; }
+    .kw-row { display: flex; align-items: center; gap: 10px; }
+    .kw-name { font-size: 13px; color: var(--text2); font-weight: 500; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kw-bar-wrap { flex: 2; background: var(--card2); border-radius: 20px; height: 6px; overflow: hidden; }
+    .kw-bar { height: 6px; border-radius: 20px; background: linear-gradient(90deg, var(--violet), var(--cyan)); }
+    .kw-vol { font-size: 12px; color: var(--text4); font-weight: 600; width: 40px; text-align: right; }
+
+    /* Geo donut placeholder */
+    .geo-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .geo-row { display: flex; align-items: center; gap: 10px; }
+    .geo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .geo-city { font-size: 13px; color: var(--text2); flex: 1; }
+    .geo-pct { font-size: 13px; font-weight: 700; color: var(--text1); }
+    .geo-bar-wrap { flex: 2; background: var(--card2); border-radius: 20px; height: 5px; overflow: hidden; }
+    .geo-bar { height: 5px; border-radius: 20px; }
+
+    /* Footer */
+    .dash-footer { text-align: center; font-size: 12px; color: var(--text4); margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-icon">AB</div>
+    <span class="logo-name">AutoBoost</span>
+  </div>
+  <div class="topbar-right">
+    <span class="date-label">März 2026</span>
+    <span class="badge-demo">Demo-Ansicht</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-title">Performance-Übersicht</div>
+    <div class="page-sub">Ihr persönliches Google Ads Dashboard — aktualisiert täglich</div>
+  </div>
+
+  <!-- PERIOD TABS -->
+  <div class="period-tabs">
+    <div class="period-tab">7 Tage</div>
+    <div class="period-tab active">30 Tage</div>
+    <div class="period-tab">90 Tage</div>
+    <div class="period-tab">Gesamt</div>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Leads</div>
+      <div class="kpi-value">94<span class="kpi-unit">Stk</span></div>
+      <div class="kpi-delta up">↑ +38% vs. Vormonat</div>
+      <div class="kpi-sub">Anfragen & Anrufe</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Kosten pro Lead</div>
+      <div class="kpi-value">€<span class="kpi-unit" style="font-size:28px;color:var(--text1);font-weight:800;">31</span></div>
+      <div class="kpi-delta up">↓ –67% vs. Portale</div>
+      <div class="kpi-sub">Ø CPL (Vormonat: €95)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Klicks</div>
+      <div class="kpi-value">1.002<span class="kpi-unit"></span></div>
+      <div class="kpi-delta up">↑ +22%</div>
+      <div class="kpi-sub">Unique Besucher via Ads</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Werbeausgaben</div>
+      <div class="kpi-value">€<span class="kpi-unit" style="font-size:28px;color:var(--text1);font-weight:800;">2.900</span></div>
+      <div class="kpi-delta neutral">→ Im Budget</div>
+      <div class="kpi-sub">Budget: €3.000/Mo</div>
+    </div>
+  </div>
+
+  <!-- WEEKLY LEADS CHART -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Leads pro Woche</div>
+        <div class="chart-subtitle">Letzte 4 Wochen</div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--violet)"></div> Leads</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--cyan)"></div> Klicks ÷ 10</div>
+      </div>
+    </div>
+    <div class="bar-chart">
+      <svg viewBox="0 0 600 160" preserveAspectRatio="none" style="height:160px">
+        <!-- Grid lines -->
+        <line x1="0" y1="20" x2="600" y2="20" stroke="#1F2937" stroke-width="1"/>
+        <line x1="0" y1="60" x2="600" y2="60" stroke="#1F2937" stroke-width="1"/>
+        <line x1="0" y1="100" x2="600" y2="100" stroke="#1F2937" stroke-width="1"/>
+        <line x1="0" y1="140" x2="600" y2="140" stroke="#1F2937" stroke-width="1"/>
+        <!-- Y labels -->
+        <text x="0" y="18" fill="#6B7280" font-size="10">30</text>
+        <text x="0" y="58" fill="#6B7280" font-size="10">20</text>
+        <text x="0" y="98" fill="#6B7280" font-size="10">10</text>
+        <text x="0" y="138" fill="#6B7280" font-size="10">0</text>
+
+        <!-- Week 1: 17 leads, 22 klicks -->
+        <rect x="40" y="83" width="40" height="57" rx="5" fill="url(#violet)" opacity="0.9"/>
+        <rect x="88" y="69" width="20" height="71" rx="4" fill="var(--cyan)" opacity="0.6"/>
+        <text x="60" y="154" text-anchor="middle" fill="#6B7280" font-size="10">KW 9</text>
+
+        <!-- Week 2: 22 leads, 25 klicks -->
+        <rect x="180" y="63" width="40" height="77" rx="5" fill="url(#violet)" opacity="0.9"/>
+        <rect x="228" y="57" width="20" height="83" rx="4" fill="var(--cyan)" opacity="0.6"/>
+        <text x="200" y="154" text-anchor="middle" fill="#6B7280" font-size="10">KW 10</text>
+
+        <!-- Week 3: 26 leads, 28 klicks -->
+        <rect x="320" y="47" width="40" height="93" rx="5" fill="url(#violet)" opacity="0.9"/>
+        <rect x="368" y="40" width="20" height="100" rx="4" fill="var(--cyan)" opacity="0.6"/>
+        <text x="340" y="154" text-anchor="middle" fill="#6B7280" font-size="10">KW 11</text>
+
+        <!-- Week 4: 29 leads, 30 klicks -->
+        <rect x="460" y="34" width="40" height="106" rx="5" fill="url(#violet)" opacity="0.9"/>
+        <rect x="508" y="29" width="20" height="111" rx="4" fill="var(--cyan)" opacity="0.6"/>
+        <text x="480" y="154" text-anchor="middle" fill="#6B7280" font-size="10">KW 12</text>
+
+        <!-- Value labels -->
+        <text x="60" y="78" text-anchor="middle" fill="#F9FAFB" font-size="11" font-weight="700">17</text>
+        <text x="200" y="58" text-anchor="middle" fill="#F9FAFB" font-size="11" font-weight="700">22</text>
+        <text x="340" y="42" text-anchor="middle" fill="#F9FAFB" font-size="11" font-weight="700">26</text>
+        <text x="480" y="29" text-anchor="middle" fill="#F9FAFB" font-size="11" font-weight="700">29</text>
+
+        <defs>
+          <linearGradient id="violet" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="100%" stop-color="#5B21B6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 2-COL: Campaigns + Geo -->
+  <div class="two-col">
+
+    <!-- TOP KEYWORDS -->
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-title" style="margin-bottom:16px">Top Keywords</div>
+      <div class="keyword-list">
+        <div class="kw-row">
+          <div class="kw-name">audi aschaffenburg</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:95%"></div></div>
+          <div class="kw-vol">1.3K</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">vw händler aschaffenburg</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:78%"></div></div>
+          <div class="kw-vol">980</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">neuwagen aschaffenburg</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:65%"></div></div>
+          <div class="kw-vol">820</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">skoda autohaus</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:54%"></div></div>
+          <div class="kw-vol">680</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">gebrauchtwagen aschaffenburg</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:44%"></div></div>
+          <div class="kw-vol">550</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">seat händler alzey</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:35%"></div></div>
+          <div class="kw-vol">440</div>
+        </div>
+        <div class="kw-row">
+          <div class="kw-name">autohaus bingen vw</div>
+          <div class="kw-bar-wrap"><div class="kw-bar" style="width:28%"></div></div>
+          <div class="kw-vol">350</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEO VERTEILUNG -->
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-title" style="margin-bottom:16px">Leads nach Standort</div>
+      <div class="geo-list">
+        <div class="geo-row">
+          <div class="geo-dot" style="background:var(--violet)"></div>
+          <div class="geo-city">Aschaffenburg</div>
+          <div class="geo-bar-wrap"><div class="geo-bar" style="width:78%;background:var(--violet)"></div></div>
+          <div class="geo-pct">38</div>
+        </div>
+        <div class="geo-row">
+          <div class="geo-dot" style="background:var(--cyan)"></div>
+          <div class="geo-city">Alzey</div>
+          <div class="geo-bar-wrap"><div class="geo-bar" style="width:60%;background:var(--cyan)"></div></div>
+          <div class="geo-pct">29</div>
+        </div>
+        <div class="geo-row">
+          <div class="geo-dot" style="background:var(--green)"></div>
+          <div class="geo-city">Bingen am Rhein</div>
+          <div class="geo-bar-wrap"><div class="geo-bar" style="width:37%;background:var(--green)"></div></div>
+          <div class="geo-pct">18</div>
+        </div>
+        <div class="geo-row">
+          <div class="geo-dot" style="background:var(--yellow)"></div>
+          <div class="geo-city">Sonstige</div>
+          <div class="geo-bar-wrap"><div class="geo-bar" style="width:18%;background:var(--yellow)"></div></div>
+          <div class="geo-pct">9</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--border)">
+        <div class="chart-title" style="margin-bottom:12px;font-size:13px">Conversion Rate</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="flex:1;background:var(--card2);border-radius:20px;height:10px;overflow:hidden">
+            <div style="width:9.4%;height:10px;border-radius:20px;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--green)">9,4%</div>
+        </div>
+        <div style="font-size:11px;color:var(--text4);margin-top:6px">Klick → Anfrage (Branche Ø: 3–5%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPAIGN TABLE -->
+  <div class="table-card">
+    <div class="table-title">Aktive Kampagnen</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Kampagne</th>
+          <th>Status</th>
+          <th>Klicks</th>
+          <th>Leads</th>
+          <th>CPL</th>
+          <th>Budget/Mo</th>
+          <th>CTR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="campaign-name">Audi Aschaffenburg Search</div><div style="font-size:11px;color:var(--text4)">Brand + Modell</div></td>
+          <td><span class="status-pill status-active">Aktiv</span></td>
+          <td class="num">312</td>
+          <td class="num-green">28</td>
+          <td class="num-green">€22</td>
+          <td>€800</td>
+          <td>5,8%</td>
+        </tr>
+        <tr>
+          <td><div class="campaign-name">VW Aschaffenburg Search</div><div style="font-size:11px;color:var(--text4)">Brand + Händler</div></td>
+          <td><span class="status-pill status-active">Aktiv</span></td>
+          <td class="num">278</td>
+          <td class="num-green">24</td>
+          <td class="num-green">€29</td>
+          <td>€750</td>
+          <td>4,9%</td>
+        </tr>
+        <tr>
+          <td><div class="campaign-name">Alzey Multi-Marken</div><div style="font-size:11px;color:var(--text4)">VW, Skoda, Seat</div></td>
+          <td><span class="status-pill status-active">Aktiv</span></td>
+          <td class="num">241</td>
+          <td class="num-green">21</td>
+          <td class="num-green">€33</td>
+          <td>€700</td>
+          <td>4,3%</td>
+        </tr>
+        <tr>
+          <td><div class="campaign-name">Gebrauchtwagen Aschaffenburg</div><div style="font-size:11px;color:var(--text4)">GBV Search</div></td>
+          <td><span class="status-pill status-active">Aktiv</span></td>
+          <td class="num">119</td>
+          <td class="num-yellow">14</td>
+          <td class="num-yellow">€39</td>
+          <td>€450</td>
+          <td>3,2%</td>
+        </tr>
+        <tr>
+          <td><div class="campaign-name">Bingen Brand Search</div><div style="font-size:11px;color:var(--text4)">Markenschutz</div></td>
+          <td><span class="status-pill status-active">Aktiv</span></td>
+          <td class="num">52</td>
+          <td class="num-green">7</td>
+          <td class="num-green">€29</td>
+          <td class="num-yellow">€200</td>
+          <td>6,1%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INSIGHT CARD -->
+  <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.25);border-radius:14px;padding:20px;margin-bottom:20px">
+    <div style="font-size:13px;font-weight:700;color:var(--violet);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.07em">💡 AutoBoost Empfehlung — März 2026</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.6">
+      Die Kampagne <strong style="color:var(--text1)">„Gebrauchtwagen Aschaffenburg"</strong> liefert gute Lead-Zahlen, aber der CPL (€39) liegt über dem Ziel. Empfehlung: Negative Keywords für Markenfremde Suchanfragen ergänzen + Gebotsanpassung für Mobilgeräte. Potenzial: CPL auf <strong style="color:var(--green)">≤ €28</strong> reduzieren.
+    </div>
+  </div>
+
+  <div class="dash-footer">
+    AutoBoost by Echomotion · Google Ads für Autohäuser · Daten täglich aktualisiert
+    <br>
+    <span style="color:rgba(107,114,128,0.5)">Diese Ansicht zeigt Beispieldaten zu Demonstrationszwecken</span>
+  </div>
+</div>
+
+</body>
+</html>
