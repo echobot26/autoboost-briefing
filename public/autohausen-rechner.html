@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autohausen AG × Echomotion — Umsatz-Rechner</title>
+  <style>
+    @font-face {
+      font-family: 'TT Supermolot Neue';
+      src: url('fonts/TTSupermolotNeue-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'TT Supermolot Neue';
+      src: url('fonts/TTSupermolotNeue-DemiBold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'TT Supermolot Neue';
+      src: url('fonts/TTSupermolotNeue-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1E2D37;
+      --navy-mid: #253642;
+      --navy-light: #2e4354;
+      --yellow: #FFE619;
+      --yellow-dim: rgba(255,230,25,0.12);
+      --white: #FFFFFF;
+      --muted: rgba(255,255,255,0.55);
+      --border: rgba(255,255,255,0.1);
+      --green: #3ECF8E;
+      --red: #FF6B6B;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'TT Supermolot Neue', 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy-mid);
+      border-bottom: 2px solid var(--yellow);
+      padding: 28px 32px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo-badge {
+      width: 52px; height: 52px;
+      background: var(--yellow);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px; color: var(--navy);
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    header p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+      max-width: 1200px;
+      margin: 32px auto 0;
+      padding: 0 24px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      header { padding: 20px 16px; }
+      header h1 { font-size: 1.15rem; }
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 20px;
+    }
+
+    /* ── Section heading ── */
+    .section-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    /* ── Toggle Row ── */
+    .toggle-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+
+    .toggle-info { flex: 1; }
+    .toggle-info strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .toggle-info span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* toggle switch */
+    .toggle-switch {
+      position: relative;
+      width: 48px; height: 26px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .toggle-switch input { display: none; }
+    .toggle-switch label {
+      display: block;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.15);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-switch label::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 20px; height: 20px;
+      background: var(--white);
+      border-radius: 50%;
+      transition: left 0.2s, background 0.2s;
+    }
+    .toggle-switch input:checked + label { background: var(--yellow); }
+    .toggle-switch input:checked + label::after {
+      left: 25px;
+      background: var(--navy);
+    }
+
+    /* ── Radio Group ── */
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .radio-option {
+      position: relative;
+    }
+    .radio-option input { display: none; }
+    .radio-option label {
+      display: block;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.82rem;
+    }
+    .radio-option label strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .radio-option label span { color: var(--muted); line-height: 1.4; }
+    .radio-option input:checked + label {
+      border-color: var(--yellow);
+      background: var(--yellow-dim);
+    }
+
+    /* ── Slider ── */
+    .slider-row {
+      margin-bottom: 20px;
+    }
+    .slider-row:last-child { margin-bottom: 0; }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .slider-header span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .slider-header strong {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--yellow);
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.15);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--yellow);
+      cursor: pointer;
+      border: 3px solid var(--navy);
+      box-shadow: 0 0 0 2px var(--yellow);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--yellow);
+      cursor: pointer;
+      border: 3px solid var(--navy);
+    }
+
+    .slider-range {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+    .slider-range span { font-size: 0.7rem; color: var(--muted); }
+
+    /* ── Result Card ── */
+    .result-card {
+      position: sticky;
+      top: 24px;
+    }
+
+    .total-block {
+      text-align: center;
+      padding: 20px 0 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .total-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .total-value {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .total-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* split bars */
+    .split-bar-container {
+      margin-bottom: 20px;
+    }
+    .split-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .split-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      background: var(--navy-light);
+      overflow: hidden;
+      display: flex;
+    }
+    .split-bar-autohausen {
+      height: 100%;
+      background: var(--yellow);
+      transition: width 0.4s ease;
+      border-radius: 5px 0 0 5px;
+    }
+    .split-bar-echomotion {
+      height: 100%;
+      background: var(--green);
+      transition: width 0.4s ease;
+      border-radius: 0 5px 5px 0;
+    }
+
+    /* share blocks */
+    .share-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .share-block {
+      border-radius: 10px;
+      padding: 14px;
+      border: 1.5px solid transparent;
+    }
+    .share-block.autohausen {
+      background: rgba(255,230,25,0.1);
+      border-color: rgba(255,230,25,0.25);
+    }
+    .share-block.echomotion {
+      background: rgba(62,207,142,0.08);
+      border-color: rgba(62,207,142,0.2);
+    }
+    .share-block-name {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .share-block.autohausen .share-block-name { color: var(--yellow); }
+    .share-block.echomotion .share-block-name { color: var(--green); }
+    .share-block-eur {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .share-block-pct {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* onboarding fee block */
+    .fee-block {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .fee-block-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .fee-block-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* optimal badge */
+    .optimal-badge {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(62,207,142,0.12);
+      border: 1.5px solid rgba(62,207,142,0.4);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.8rem;
+      color: var(--green);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .optimal-badge.visible { display: flex; }
+    .optimal-badge svg { flex-shrink: 0; }
+
+    /* active modifiers list */
+    .modifier-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .modifier-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .modifier-tag .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--muted);
+    }
+    .modifier-tag.plus .dot { background: var(--green); }
+    .modifier-tag.minus .dot { background: var(--red); }
+    .modifier-tag.plus { color: rgba(62,207,142,0.85); }
+    .modifier-tag.minus { color: rgba(255,107,107,0.85); }
+
+    /* divider */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    /* Responsive: on small screens result card is not sticky */
+    @media (max-width: 860px) {
+      .result-card { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-badge">AH</div>
+  <div>
+    <h1>Autohausen AG × Echomotion</h1>
+    <p>Interaktiver Umsatz-Rechner — Partnerschaftskonditionen</p>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Left: Controls -->
+  <div>
+
+    <!-- Sliders -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">Basisparameter</div>
+
+      <div class="slider-row">
+        <div class="slider-header">
+          <span>Anzahl Händler</span>
+          <strong id="val-haendler">50</strong>
+        </div>
+        <input type="range" id="slider-haendler" min="1" max="200" value="50" />
+        <div class="slider-range">
+          <span>1</span><span>200</span>
+        </div>
+      </div>
+
+      <div class="slider-row" style="margin-top:20px;">
+        <div class="slider-header">
+          <span>Service Fee / Händler / Monat</span>
+          <strong id="val-fee">€1.200</strong>
+        </div>
+        <input type="range" id="slider-fee" min="500" max="2500" value="1200" step="50" />
+        <div class="slider-range">
+          <span>€500</span><span>€2.500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggles -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">Vertragskonditionen</div>
+
+      <div class="section-label">§ 6.3 Dynamische Staffelung</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <strong>Dynamische Staffelung</strong>
+          <span>Ab 50 Händlern +2 %, ab 100 Händlern +3 % für Autohausen (kumulativ mit Basis-Split)</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-staffelung" />
+          <label for="toggle-staffelung"></label>
+        </div>
+      </div>
+
+      <div class="section-label">§ 8.2 White-Label Modus</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <strong>White-Label aktiv</strong>
+          <span>Echomotion-Branding verschwindet → +5 % Revenue Share für Echomotion</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-whitelabel" />
+          <label for="toggle-whitelabel"></label>
+        </div>
+      </div>
+
+      <div class="section-label">§ 10 Exklusivität</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <strong>Exklusivitätsbonus</strong>
+          <span>Autohausen erhält Exklusivitätsbonus +3 % auf ihren Anteil</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-exklusiv" />
+          <label for="toggle-exklusiv"></label>
+        </div>
+      </div>
+
+      <div class="section-label">§ 11 Mindestgarantie</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <strong>Mindestgarantie (20 Händler/Monat)</strong>
+          <span>Autohausen garantiert Mindestabnahme → Echomotion gibt −2 % auf eigenen Anteil</span>
+        </div>
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-mindest" />
+          <label for="toggle-mindest"></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onboarding Fee -->
+    <div class="card">
+      <div class="card-title">§ 6.4 Onboarding Fee</div>
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" name="onboarding" id="ob-a" value="a" checked />
+          <label for="ob-a">
+            <strong>Option A</strong>
+            <span>Einmalig €490/Händler, kein Split-Bonus</span>
+          </label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" name="onboarding" id="ob-b" value="b" />
+          <label for="ob-b">
+            <strong>Option B</strong>
+            <span>Kein Onboarding-Fee, aber +10 % Onboarding-Anteil für Echomotion</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right: Result -->
+  <div class="result-card">
+    <div class="card">
+      <div class="card-title">Ergebnis — Live-Berechnung</div>
+
+      <div class="total-block">
+        <div class="total-label">Monatlicher Gesamtumsatz</div>
+        <div class="total-value" id="res-total">€60.000</div>
+        <div class="total-sub" id="res-total-sub">50 Händler × €1.200</div>
+      </div>
+
+      <!-- Split bar -->
+      <div class="split-bar-container">
+        <div class="split-bar-labels">
+          <span id="bar-label-ah">Autohausen <span id="bar-pct-ah">80%</span></span>
+          <span id="bar-label-em">Echomotion <span id="bar-pct-em">20%</span></span>
+        </div>
+        <div class="split-bar">
+          <div class="split-bar-autohausen" id="bar-ah" style="width:80%"></div>
+          <div class="split-bar-echomotion" id="bar-em" style="width:20%"></div>
+        </div>
+      </div>
+
+      <!-- Share blocks -->
+      <div class="share-grid">
+        <div class="share-block autohausen">
+          <div class="share-block-name">Autohausen AG</div>
+          <div class="share-block-eur" id="res-ah-eur">€48.000</div>
+          <div class="share-block-pct" id="res-ah-pct">80,0 %</div>
+        </div>
+        <div class="share-block echomotion">
+          <div class="share-block-name">Echomotion</div>
+          <div class="share-block-eur" id="res-em-eur">€12.000</div>
+          <div class="share-block-pct" id="res-em-pct">20,0 %</div>
+        </div>
+      </div>
+
+      <!-- Onboarding fee info -->
+      <div class="fee-block" id="fee-block">
+        <div class="fee-block-label">Onboarding Fee (einmalig)</div>
+        <div class="fee-block-value" id="res-onboarding">€24.500</div>
+      </div>
+
+      <!-- Optimal badge -->
+      <div class="optimal-badge" id="optimal-badge">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="optimal-text">Optimale Konstellation für Echomotion erreicht!</span>
+      </div>
+
+      <!-- Active modifiers -->
+      <div class="modifier-list" id="modifier-list"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Elements ──
+  const sliderHaendler = document.getElementById('slider-haendler');
+  const sliderFee      = document.getElementById('slider-fee');
+  const valHaendler    = document.getElementById('val-haendler');
+  const valFee         = document.getElementById('val-fee');
+
+  const tgStaffelung   = document.getElementById('toggle-staffelung');
+  const tgWhitelabel   = document.getElementById('toggle-whitelabel');
+  const tgExklusiv     = document.getElementById('toggle-exklusiv');
+  const tgMindest      = document.getElementById('toggle-mindest');
+
+  // ── Formatting ──
+  const fmt = (n) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+  const fmtPct = (n) => n.toFixed(1).replace('.', ',') + ' %';
+
+  // ── Calculate ──
+  function calc() {
+    const haendler = +sliderHaendler.value;
+    const fee      = +sliderFee.value;
+    const staffelung  = tgStaffelung.checked;
+    const whitelabel  = tgWhitelabel.checked;
+    const exklusiv    = tgExklusiv.checked;
+    const mindest     = tgMindest.checked;
+    const onboarding  = document.querySelector('input[name=onboarding]:checked').value;
+
+    // Base split
+    let ahPct = 80;
+    let emPct = 20;
+
+    const modifiers = [];
+
+    // § 6.3 Dynamische Staffelung
+    if (staffelung) {
+      if (haendler >= 100) {
+        ahPct += 3; emPct -= 3;
+        modifiers.push({ label: '§ 6.3 Staffelung 100+ Händler: +3 % Autohausen', type: 'plus' });
+      } else if (haendler >= 50) {
+        ahPct += 2; emPct -= 2;
+        modifiers.push({ label: '§ 6.3 Staffelung 50+ Händler: +2 % Autohausen', type: 'plus' });
+      }
+    }
+
+    // § 8.2 White-Label
+    if (whitelabel) {
+      emPct += 5; ahPct -= 5;
+      modifiers.push({ label: '§ 8.2 White-Label: +5 % Echomotion', type: 'minus' });
+    }
+
+    // § 10 Exklusivität
+    if (exklusiv) {
+      ahPct += 3; emPct -= 3;
+      modifiers.push({ label: '§ 10 Exklusivität: +3 % Autohausen', type: 'plus' });
+    }
+
+    // § 11 Mindestgarantie
+    if (mindest) {
+      emPct -= 2; ahPct += 2;
+      modifiers.push({ label: '§ 11 Mindestgarantie: −2 % Echomotion', type: 'plus' });
+    }
+
+    // § 6.4 Onboarding
+    // Option B: no fee, but +10% for Echomotion on the onboarding amount (not on monthly revenue split — it's an extra perk described as "Onboarding-Anteil")
+    // We interpret as: Echomotion gets a 10% premium on their monthly share when B is chosen (as compensation for waived fee)
+    let onboardingFee = 0;
+    let onboardingNote = '';
+    if (onboarding === 'a') {
+      onboardingFee = haendler * 490;
+      onboardingNote = `${haendler} × €490`;
+      modifiers.push({ label: '§ 6.4 Option A: Einmalig ' + fmt(onboardingFee) + ' Onboarding-Fee', type: 'neutral' });
+    } else {
+      // Option B: +10% auf den Onboarding-Anteil → wir interpretieren das als +10% des Echomotion-Anteils (dauerhaft)
+      emPct += 10; ahPct -= 10;
+      modifiers.push({ label: '§ 6.4 Option B: Kein Onboarding-Fee, +10 % Echomotion-Anteil', type: 'minus' });
+    }
+
+    // Clamp
+    ahPct = Math.max(0, Math.min(100, ahPct));
+    emPct = Math.max(0, Math.min(100, emPct));
+
+    const total = haendler * fee;
+    const ahEur = total * ahPct / 100;
+    const emEur = total * emPct / 100;
+
+    // Optimal: highest Echomotion share (whitelabel + option B + mindest off + staffelung off)
+    // We detect if current setup gives max Echomotion share by checking emPct
+    const isOptimal = emPct >= 30; // meaningful high threshold
+
+    // ── Update UI ──
+    valHaendler.textContent = haendler;
+    valFee.textContent = '€' + fee.toLocaleString('de-DE');
+
+    document.getElementById('res-total').textContent = fmt(total);
+    document.getElementById('res-total-sub').textContent = `${haendler} Händler × €${fee.toLocaleString('de-DE')}`;
+
+    document.getElementById('bar-ah').style.width = ahPct + '%';
+    document.getElementById('bar-em').style.width = emPct + '%';
+    document.getElementById('bar-pct-ah').textContent = ahPct.toFixed(0) + '%';
+    document.getElementById('bar-pct-em').textContent = emPct.toFixed(0) + '%';
+
+    document.getElementById('res-ah-eur').textContent = fmt(ahEur);
+    document.getElementById('res-ah-pct').textContent = fmtPct(ahPct);
+    document.getElementById('res-em-eur').textContent = fmt(emEur);
+    document.getElementById('res-em-pct').textContent = fmtPct(emPct);
+
+    // Onboarding fee block
+    const feeBlock = document.getElementById('fee-block');
+    if (onboarding === 'a') {
+      feeBlock.style.display = 'block';
+      document.getElementById('res-onboarding').textContent = fmt(onboardingFee) + ' (' + onboardingNote + ')';
+    } else {
+      feeBlock.style.display = 'none';
+    }
+
+    // Optimal badge
+    const badge = document.getElementById('optimal-badge');
+    if (isOptimal) {
+      badge.classList.add('visible');
+      document.getElementById('optimal-text').textContent =
+        `Optimale Konstellation — Echomotion-Anteil: ${fmtPct(emPct)} (${fmt(emEur)}/Monat)`;
+    } else {
+      badge.classList.remove('visible');
+    }
+
+    // Modifier list
+    const list = document.getElementById('modifier-list');
+    if (modifiers.length === 0) {
+      list.innerHTML = '<div class="modifier-tag"><div class="dot"></div>Basis-Split: 80 % / 20 %</div>';
+    } else {
+      list.innerHTML = '<div class="modifier-tag"><div class="dot"></div>Basis-Split: 80 % / 20 %</div>' +
+        modifiers.map(m =>
+          `<div class="modifier-tag ${m.type}"><div class="dot"></div>${m.label}</div>`
+        ).join('');
+    }
+  }
+
+  // ── Event listeners ──
+  [sliderHaendler, sliderFee].forEach(el => el.addEventListener('input', calc));
+  [tgStaffelung, tgWhitelabel, tgExklusiv, tgMindest].forEach(el => el.addEventListener('change', calc));
+  document.querySelectorAll('input[name=onboarding]').forEach(el => el.addEventListener('change', calc));
+
+  // Initial render
+  calc();
+</script>
+
+</body>
+</html>

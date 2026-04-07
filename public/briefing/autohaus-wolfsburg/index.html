@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoboost Briefing — Autohaus Wolfsburg</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%237C3AED'/%3E%3Cstop offset='100%25' style='stop-color:%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='url(%23g)'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='bold' font-size='18' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0B0B1A; color: #E0E0F0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .header { background: linear-gradient(135deg, #7C3AED, #06B6D4); padding: 36px 24px; text-align: center; }
+  .header .badge { font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .header h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .header p { font-size: 14px; color: rgba(255,255,255,0.8); }
+  .container { max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
+  .notice { background: #1A1A35; border-left: 3px solid #06B6D4; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 32px; font-size: 13px; color: #8080C0; line-height: 1.6; }
+  .section { background: #13132A; border: 1px solid #1E1E40; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .section h2 { font-size: 13px; color: #7C3AED; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 16px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 13px; color: #A0A0C0; margin-bottom: 6px; }
+  .prefilled-tag { font-size: 11px; color: #06B6D4; margin-left: 6px; vertical-align: middle; }
+  .field input, .field select, .field textarea { width: 100%; background: #0F0F25; border: 1px solid #2A2A50; border-radius: 6px; padding: 10px 14px; color: #E0E0F0; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: #7C3AED; }
+  .field input[data-prefilled], .field textarea[data-prefilled], .field select[data-prefilled] { border-color: #2A3A50; background: #0D1225; }
+  .field textarea { min-height: 80px; resize: vertical; }
+  .field select option { background: #13132A; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 500px) { .row { grid-template-columns: 1fr; } }
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .checkbox-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #A0A0C0; cursor: pointer; }
+  .checkbox-item input[type=checkbox] { width: 16px; height: 16px; accent-color: #7C3AED; flex-shrink: 0; }
+  .submit-section { background: #13132A; border: 1px solid #7C3AED; border-radius: 10px; padding: 24px; margin-top: 24px; text-align: center; }
+  .submit-section p { font-size: 13px; color: #8080B0; margin-bottom: 16px; line-height: 1.6; }
+  .btn-submit { background: linear-gradient(135deg, #7C3AED, #06B6D4); color: #fff; border: none; border-radius: 8px; padding: 14px 32px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; }
+  .footer { text-align: center; padding: 24px; font-size: 12px; color: #3A3A60; }
+  .footer a { color: #7C3AED; text-decoration: none; }
+  .required { color: #EF4444; margin-left: 2px; }
+  .legend { font-size: 12px; color: #505070; margin-bottom: 20px; }
+  .legend span { color: #06B6D4; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="badge">Autoboost by Echomotion · Onboarding</p>
+  <h1>Willkommen, Autohaus Wolfsburg! 👋</h1>
+  <p>Bitte prüfen und ergänzen Sie die folgenden Angaben für Ihren Kampagnen-Start.</p>
+</div>
+
+<div class="container">
+
+  <div class="notice">
+    💡 <strong>Hinweis:</strong> Wir haben dieses Formular bereits auf Basis Ihrer Website vorausgefüllt. Bitte prüfen Sie alle Angaben — Sie können alles direkt bearbeiten und korrigieren. Das dauert ca. 10–15 Minuten.
+  </div>
+
+  <p class="legend"><span>■</span> Leicht blau hinterlegt = von uns vorausgefüllt, bitte prüfen und ggf. korrigieren</p>
+
+  <form id="briefingForm">
+
+    <!-- Abschnitt 1: Unternehmen -->
+    <div class="section">
+      <h2>1 — Ihr Unternehmen</h2>
+
+      <div class="field">
+        <label>Unternehmensname <span class="prefilled-tag">vorausgefüllt</span></label>
+        <input type="text" value="Autohaus Wolfsburg Hotz und Heitmann GmbH & Co. KG" data-prefilled>
+      </div>
+
+      <div class="field">
+        <label>Website <span class="prefilled-tag">vorausgefüllt</span></label>
+        <input type="text" value="https://www.autohaus-wolfsburg.de" data-prefilled>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Ansprechpartner (operativ) <span class="required">*</span> <span class="prefilled-tag">vorausgefüllt</span></label>
+          <input type="text" value="Gregor Brylla" data-prefilled>
+        </div>
+        <div class="field">
+          <label>Funktion <span class="prefilled-tag">vorausgefüllt</span></label>
+          <input type="text" value="Verkaufsleiter" data-prefilled>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Email <span class="required">*</span> <span class="prefilled-tag">vorausgefüllt</span></label>
+          <input type="email" value="gregor.brylla@autohaus-wolfsburg.de" data-prefilled>
+        </div>
+        <div class="field">
+          <label>Telefon <span class="prefilled-tag">vorausgefüllt</span></label>
+          <input type="text" value="05361 204-1550" data-prefilled>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Zeichnungsberechtigte Person (für Vertragsunterlagen)</label>
+        <input type="text" placeholder="Name + Funktion">
+      </div>
+    </div>
+
+    <!-- Abschnitt 2: Standorte & Marken -->
+    <div class="section">
+      <h2>2 — Standorte & Marken</h2>
+
+      <div class="field">
+        <label>Hauptstandort <span class="prefilled-tag">vorausgefüllt</span></label>
+        <input type="text" value="Heinrich-Nordhoff-Straße 119-123, 38440 Wolfsburg" data-prefilled>
+      </div>
+
+      <div class="field">
+        <label>Alle Standorte <span class="prefilled-tag">vorausgefüllt — bitte korrigieren falls nötig</span></label>
+        <textarea data-prefilled>VW-Zentrum + SEAT/CUPRA (Heinrich-Nordhoff-Str. 119-123)
+Audi Zentrum (Heinrich-Nordhoff-Str. 129)
+Škoda Zentrum (Heinrich-Nordhoff-Str. 125)
+Gebrauchtwagenzentrum (Heinrich-Nordhoff-Str. 127)
+Autohaus Wolfsburg Vorsfelde (Helmstedter Str. 3)</textarea>
+      </div>
+
+      <div class="field">
+        <label>Marken (Neuwagen) <span class="prefilled-tag">vorausgefüllt</span></label>
+        <input type="text" value="VW, Audi, SEAT, CUPRA, Škoda, VW Nutzfahrzeuge" data-prefilled>
+      </div>
+
+      <div class="field">
+        <label>Gebrauchtwagen ebenfalls bewerben? <span class="prefilled-tag">vorausgefüllt</span></label>
+        <select data-prefilled>
+          <option value="ja" selected>Ja — GW aktiv bewerben</option>
+          <option value="nein">Nein — nur Neuwagen</option>
+          <option value="schwerpunkt-gw">Schwerpunkt Gebrauchtwagen</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Abschnitt 3: Ziele & Budget -->
+    <div class="section">
+      <h2>3 — Ziele & Budget</h2>
+
+      <div class="field">
+        <label>Primäres Kampagnenziel <span class="required">*</span></label>
+        <select>
+          <option value="">Bitte wählen</option>
+          <option value="leads">Mehr Anfragen / Leads</option>
+          <option value="probefahrten">Mehr Probefahrten</option>
+          <option value="anrufe">Mehr Anrufe</option>
+          <option value="alle">Alle gleichwertig</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Monatliches Werbebudget (€, netto) <span class="required">*</span></label>
+          <input type="text" placeholder="z.B. 3.000">
+        </div>
+        <div class="field">
+          <label>Ziel-CPL (Kosten pro Lead)</label>
+          <input type="text" placeholder="z.B. unter 20€ oder kein Ziel">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Abschnitt 4: Tracking & Technik -->
+    <div class="section">
+      <h2>4 — Tracking & Technologie</h2>
+
+      <div class="field">
+        <label>Google Ads Konto-ID <span class="required">*</span></label>
+        <input type="text" placeholder="z.B. 123-456-7890">
+      </div>
+
+      <div class="field">
+        <label>Google Merchant Center ID</label>
+        <input type="text" placeholder="Falls vorhanden">
+      </div>
+
+      <div class="field">
+        <label>Google Analytics 4 vorhanden?</label>
+        <select>
+          <option value="">Bitte wählen</option>
+          <option value="ja">Ja — Zugriff wird gewährt</option>
+          <option value="nein">Nein — bitte anlegen</option>
+          <option value="unbekannt">Weiß ich nicht</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Google Tag Manager vorhanden?</label>
+        <select>
+          <option value="">Bitte wählen</option>
+          <option value="ja">Ja</option>
+          <option value="nein">Nein — bitte einrichten</option>
+          <option value="unbekannt">Weiß ich nicht</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Wer ist zuständig für die Website / IT?</label>
+        <input type="text" placeholder="Name + Kontakt des Website-Verantwortlichen">
+      </div>
+
+      <div class="field">
+        <label>Cookie Consent Tool</label>
+        <select>
+          <option value="">Bitte wählen</option>
+          <option value="cookiebot">Cookiebot</option>
+          <option value="onetrust">OneTrust</option>
+          <option value="usercentrics">Usercentrics</option>
+          <option value="eigene">Eigene Lösung</option>
+          <option value="keine">Kein Tool</option>
+          <option value="unbekannt">Weiß ich nicht</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>URL der Danke-Seite (nach Formular-Absendung)</label>
+        <input type="text" placeholder="z.B. /danke oder /anfrage-bestaetigung">
+      </div>
+    </div>
+
+    <!-- Abschnitt 5: Hinweise & Besonderheiten -->
+    <div class="section">
+      <h2>5 — Hinweise & Besonderheiten</h2>
+      <div class="field">
+        <label>Gibt es etwas, das wir bei der Kampagnenerstellung unbedingt berücksichtigen sollen?</label>
+        <textarea placeholder="z.B. bestimmte Modelle ausschließen, saisonale Schwerpunkte, laufende Aktionen, regionale Besonderheiten, Wettbewerber die wir kennen sollten, interne Prioritäten..."></textarea>
+      </div>
+    </div>
+
+    <!-- Abschnitt 7: Bestätigung -->
+    <div class="submit-section">
+      <p>Mit dem Absenden bestätigen Sie die Richtigkeit Ihrer Angaben. Eine Kopie geht automatisch an Ihre Email-Adresse. Zeitstempel und IP werden zur Dokumentation gespeichert.</p>
+      <button type="submit" class="btn-submit">✅ Briefing absenden & bestätigen</button>
+    </div>
+
+  </form>
+
+</div>
+
+<div class="footer">
+  Autoboost by Echomotion GmbH · <a href="https://echomotion.de/agb">AGB</a> · Intro via AUTOHAUSEN AG
+</div>
+
+<script>
+document.getElementById('briefingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Vielen Dank! Ihr Briefing wurde übermittelt. Moritz Weinert meldet sich innerhalb von 1 Werktag.');
+});
+</script>
+
+</body>
+</html>
